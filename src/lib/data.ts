@@ -10,10 +10,34 @@ export const BIO = {
 }
 
 export const PROGRESS_SKILLS: ProgressSkill[] = [
-  { id: 'frontend', name: 'Frontend Development', percentage: 85 },
-  { id: 'backend', name: 'Backend Development', percentage: 75 },
-  { id: 'database', name: 'Database & API Design', percentage: 72 },
-  { id: 'uiux', name: 'UI / UX Design', percentage: 65 },
+  {
+    id: 'frontend',
+    name: 'Front End Development',
+    description:
+      'Building responsive, pixel-perfect interfaces with React, TypeScript, and modern CSS. I translate designs into fast, accessible user experiences with smooth micro-interactions and clean component architecture.',
+    percentage: 85,
+  },
+  {
+    id: 'backend',
+    name: 'Back End Development',
+    description:
+      'Designing and building RESTful APIs and server-side logic with Node.js and Express. From authentication systems to data pipelines, I architect back-end solutions that are reliable, secure, and built to scale.',
+    percentage: 75,
+  },
+  {
+    id: 'database',
+    name: 'Database & API Design',
+    description:
+      'Modeling relational and document-based schemas with MySQL, PostgreSQL, MongoDB, and Supabase. I design APIs that are intuitive, versioned, and optimised for performance from day one.',
+    percentage: 72,
+  },
+  {
+    id: 'uiux',
+    name: 'UI / UX Design',
+    description:
+      'Translating user requirements into wireframes and polished interfaces. I approach every design decision with usability, visual hierarchy, and brand consistency in mind — from concept through to final pixel.',
+    percentage: 65,
+  },
 ]
 
 export const TECH_STACK: TechIcon[] = [
@@ -57,6 +81,8 @@ export const PROJECTS: Project[] = [
   {
     id: 'rocket-elevators',
     name: 'Rocket Elevators',
+    subtitle: 'Enterprise Elevator Management',
+    year: '2024',
     category: 'Corporate Website',
     tech: ['React', 'Node.js', 'MySQL', 'REST API'],
     description:
@@ -68,6 +94,8 @@ export const PROJECTS: Project[] = [
   {
     id: 'codebloggs',
     name: 'CodeBloggs',
+    subtitle: 'Developer Community Platform',
+    year: '2024',
     category: 'Blog Platform',
     tech: ['React', 'Express', 'MongoDB', 'Redux'],
     description:
@@ -78,7 +106,9 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'rocket-food',
-    name: 'Rocket Food Delivery',
+    name: 'Rocket Food',
+    subtitle: 'Food Delivery Application',
+    year: '2023',
     category: 'Mobile + Web App',
     tech: ['React Native', 'Node.js', 'PostgreSQL'],
     description:

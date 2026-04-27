@@ -1,6 +1,7 @@
 export interface ProgressSkill {
   id: string
   name: string
+  description: string
   percentage: number
 }
 
@@ -13,6 +14,8 @@ export interface TechIcon {
 export interface Project {
   id: string
   name: string
+  subtitle: string
+  year: string
   category: string
   tech: string[]
   description: string

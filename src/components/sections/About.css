@@ -1,5 +1,5 @@
 .about {
-  background: var(--bg-alt);
+  background: transparent;
 }
 
 .about__inner {
@@ -16,9 +16,15 @@
 .about__image-frame {
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(34, 177, 196, 0.15);
   aspect-ratio: 4 / 5;
   background: linear-gradient(135deg, var(--navy-dark), var(--indigo));
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.about__image-frame:hover {
+  box-shadow: 0 12px 60px rgba(34, 177, 196, 0.15);
+  border-color: rgba(34, 177, 196, 0.35);
 }
 
 .about__image {
@@ -68,7 +74,20 @@
   margin-bottom: 36px;
 }
 
-.about__stat {}
+.about__stat {
+  background: rgba(17, 20, 78, 0.35);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(34, 177, 196, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.about__stat:hover {
+  border-color: rgba(34, 177, 196, 0.3);
+  box-shadow: 0 4px 24px rgba(34, 177, 196, 0.1);
+  transform: translateY(-3px);
+}
 
 .about__stat-number {
   font-size: 36px;

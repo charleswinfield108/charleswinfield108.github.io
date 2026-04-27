@@ -36,6 +36,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg);
 }
 
 body {
@@ -43,7 +44,8 @@ body {
   font-size: 16px;
   line-height: 1.7;
   color: var(--text);
-  background: var(--bg);
+  background: transparent;
+  isolation: isolate;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -161,6 +163,59 @@ ul, ol {
   height: 2px;
   background: var(--teal);
   flex-shrink: 0;
+}
+
+/* Reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-36px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(36px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* Enhanced button glow */
+.btn-primary:hover {
+  background: transparent;
+  color: var(--yellow);
+  box-shadow: 0 0 24px rgba(240, 204, 24, 0.25);
+}
+
+.btn-outline:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  box-shadow: 0 0 24px rgba(34, 177, 196, 0.2);
 }
 
 @media (max-width: 768px) {

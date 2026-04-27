@@ -1,52 +1,63 @@
-import { Wrench, Lightbulb } from 'lucide-react'
+import { Monitor, Server, Database, Palette, Brain, MessageSquare, Zap } from 'lucide-react'
 import { PROGRESS_SKILLS, TECH_STACK, SOFT_SKILLS } from '../../lib/data'
+import { useReveal } from '../../hooks/useReveal'
 import './Skills.css'
 
+const SKILL_ICONS = [Monitor, Server, Database, Palette]
+const SOFT_ICONS = [Brain, MessageSquare, Zap]
+
 export default function Skills() {
+  const { ref: cardsRef, visible: cardsVisible } = useReveal()
+  const { ref: stackRef, visible: stackVisible } = useReveal()
+  const { ref: softRef, visible: softVisible } = useReveal()
+
   return (
     <section className="skills section" id="skills">
       <div className="container">
 
-        {/* Top: progress bars | icon | description */}
-        <div className="skills__top">
-          <div className="skills__progress-list">
-            {PROGRESS_SKILLS.map(skill => (
-              <div key={skill.id} className="skills__progress-item">
-                <div className="skills__progress-header">
-                  <span className="skills__progress-name">{skill.name}</span>
-                  <span className="skills__progress-pct">{skill.percentage}%</span>
+        {/* Section header */}
+        <div className={`skills__header reveal ${cardsVisible ? 'visible' : ''}`}>
+          <span className="section-label">What I Know</span>
+          <h2 className="skills__header-title">Technical Skills</h2>
+        </div>
+
+        {/* 4 skill cards */}
+        <div
+          className={`skills__cards-grid reveal ${cardsVisible ? 'visible' : ''}`}
+          ref={cardsRef as React.RefObject<HTMLDivElement>}
+        >
+          {PROGRESS_SKILLS.map((skill, i) => {
+            const Icon = SKILL_ICONS[i]
+            return (
+              <div
+                key={skill.id}
+                className={`skills__card reveal-delay-${i + 1} ${cardsVisible ? 'visible' : ''}`}
+              >
+                <div className="skills__card-icon">
+                  <Icon size={26} />
                 </div>
-                <div className="skills__progress-track">
+                <h3 className="skills__card-title">{skill.name}</h3>
+                <p className="skills__card-desc">{skill.description}</p>
+                <div className="skills__bar-header">
+                  <span className="skills__bar-label">{skill.name}</span>
+                  <span className="skills__bar-pct">{skill.percentage}%</span>
+                </div>
+                <div className="skills__bar-track">
                   <div
-                    className="skills__progress-fill"
+                    className={`skills__bar-fill${cardsVisible ? ' animate' : ''}`}
                     style={{ '--target-width': `${skill.percentage}%` } as React.CSSProperties}
                   />
                 </div>
               </div>
-            ))}
-          </div>
-
-          <div className="skills__center-icon">
-            <div className="skills__icon-ring">
-              <Wrench size={32} />
-            </div>
-            <div className="skills__icon-line" />
-          </div>
-
-          <div className="skills__description">
-            <span className="section-label">What I Know</span>
-            <h3>Technical Skills</h3>
-            <p>
-              I build full-stack applications from the ground up — from designing
-              database schemas and REST APIs to crafting responsive, accessible
-              user interfaces. My toolkit spans the modern JavaScript ecosystem,
-              and I'm always learning what the industry demands next.
-            </p>
-          </div>
+            )
+          })}
         </div>
 
-        {/* Tech Stack */}
-        <div className="skills__stack">
+        {/* Tech Stack marquee */}
+        <div
+          className={`skills__stack reveal ${stackVisible ? 'visible' : ''}`}
+          ref={stackRef as React.RefObject<HTMLDivElement>}
+        >
           <div className="skills__stack-header">
             <span className="section-label">Tools I Use</span>
             <h3 className="skills__stack-title">Technology Stack</h3>
@@ -63,21 +74,32 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* Soft Skills */}
-        <div className="skills__soft">
-          <div className="skills__soft-icon">
-            <Lightbulb size={32} />
+        {/* Interpersonal Skills */}
+        <div
+          className={`skills__soft reveal ${softVisible ? 'visible' : ''}`}
+          ref={softRef as React.RefObject<HTMLDivElement>}
+        >
+          <div className="skills__soft-header">
+            <span className="section-label">How I Work</span>
+            <h3 className="skills__soft-title">Interpersonal Skills</h3>
           </div>
-          <div className="skills__soft-content">
-            <h3>Skills &amp; Attributes</h3>
-            <div className="skills__soft-list">
-              {SOFT_SKILLS.map(skill => (
-                <div key={skill.id} className="skills__soft-item">
-                  <p className="skills__soft-name">{skill.name}</p>
+
+          <div className="skills__soft-grid">
+            {SOFT_SKILLS.map((skill, i) => {
+              const Icon = SOFT_ICONS[i]
+              return (
+                <div
+                  key={skill.id}
+                  className={`skills__soft-card reveal-delay-${i + 1} ${softVisible ? 'visible' : ''}`}
+                >
+                  <div className="skills__soft-card-icon">
+                    <Icon size={24} />
+                  </div>
+                  <h4 className="skills__soft-name">{skill.name}</h4>
                   <p className="skills__soft-desc">{skill.description}</p>
                 </div>
-              ))}
-            </div>
+              )
+            })}
           </div>
         </div>
 
