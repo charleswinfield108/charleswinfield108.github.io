@@ -11,7 +11,7 @@
 
   /* Semantic tokens */
   --bg:         var(--navy-dark);
-  --bg-alt:     var(--navy);
+  --bg-alt:     var(--navy-dark);
   --text:       var(--silver);
   --text-h:     var(--white);
   --accent:     var(--teal);

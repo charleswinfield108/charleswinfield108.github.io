@@ -114,10 +114,27 @@
   font-weight: 800;
 }
 
-.skills__icons-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+.skills__marquee {
+  overflow: hidden;
+  padding-top: 10px;
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.skills__marquee-track {
+  display: flex;
   gap: 20px;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.skills__marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 .skills__icon-item {

@@ -51,13 +51,15 @@ export default function Skills() {
             <span className="section-label">Tools I Use</span>
             <h3 className="skills__stack-title">Technology Stack</h3>
           </div>
-          <div className="skills__icons-grid">
-            {TECH_STACK.map(tech => (
-              <div key={tech.id} className="skills__icon-item">
-                <img src={tech.icon} alt={tech.name} />
-                <span className="skills__icon-name">{tech.name}</span>
-              </div>
-            ))}
+          <div className="skills__marquee">
+            <div className="skills__marquee-track">
+              {[...TECH_STACK, ...TECH_STACK].map((tech, i) => (
+                <div key={`${tech.id}-${i}`} className="skills__icon-item">
+                  <img src={tech.icon} alt={tech.name} />
+                  <span className="skills__icon-name">{tech.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
