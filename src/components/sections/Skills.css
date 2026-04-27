@@ -1,0 +1,231 @@
+.skills {
+  background: var(--bg);
+}
+
+.skills__top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-bottom: 80px;
+}
+
+/* Progress bars */
+.skills__progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.skills__progress-item {}
+
+.skills__progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.skills__progress-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.skills__progress-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.skills__progress-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.skills__progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(to right, var(--teal), var(--yellow));
+  animation: fillBar 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  width: 0;
+}
+
+@keyframes fillBar {
+  to { width: var(--target-width); }
+}
+
+/* Center icon */
+.skills__center-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.skills__icon-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(34, 177, 196, 0.12);
+  border: 2px solid rgba(34, 177, 196, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--teal);
+}
+
+.skills__icon-line {
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(34, 177, 196, 0.5), transparent);
+}
+
+/* Right description */
+.skills__description h3 {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.skills__description p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--silver);
+}
+
+/* Tech Stack */
+.skills__stack {
+  margin-bottom: 80px;
+}
+
+.skills__stack-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.skills__stack-title {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
+}
+
+.skills__icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 20px;
+}
+
+.skills__icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.25s;
+}
+
+.skills__icon-item:hover {
+  border-color: var(--teal);
+  background: rgba(34, 177, 196, 0.06);
+  transform: translateY(-4px);
+}
+
+.skills__icon-item img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0.85) saturate(0.9);
+  transition: filter 0.25s;
+}
+
+.skills__icon-item:hover img {
+  filter: brightness(1) saturate(1);
+}
+
+.skills__icon-name {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--silver);
+  text-align: center;
+}
+
+/* Soft skills */
+.skills__soft {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.skills__soft-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(240, 204, 24, 0.1);
+  border: 2px solid rgba(240, 204, 24, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--yellow);
+  flex-shrink: 0;
+}
+
+.skills__soft-content h3 {
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.skills__soft-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skills__soft-item {}
+
+.skills__soft-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.skills__soft-desc {
+  font-size: 14px;
+  color: var(--silver);
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .skills__top {
+    grid-template-columns: 1fr;
+  }
+
+  .skills__center-icon {
+    flex-direction: row;
+    padding-top: 0;
+  }
+
+  .skills__icon-line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, rgba(34, 177, 196, 0.5), transparent);
+  }
+
+  .skills__soft {
+    grid-template-columns: 1fr;
+  }
+}
