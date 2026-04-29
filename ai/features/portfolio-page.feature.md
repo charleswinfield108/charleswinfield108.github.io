@@ -1,95 +1,96 @@
 # Feature Spec — Portfolio Page
 
 > **Prerequisite:** Read [ai-spec.md](../ai-spec.md) before implementing anything in this feature.
-> This feature depends on the Layout established in [header-footer.feature.md](header-footer.feature.md).
+> This feature depends on the Layout established in the Header/Footer and the routing established in the Home Page feature.
 
 ---
 
 ## 1. Feature Goal & Scope
 
 ### Goal
-Build the Portfolio page — a combined résumé and project showcase. It presents Charles's education history, professional work experience, and a curated set of projects, all in a single scrollable page accessible from the navigation. A downloadable PDF version of the résumé is available directly from the page. At least two AI-generated images reinforce the visual identity of the page.
+Build the `/portfolio` page — a structured, professional showcase of Charles Winfield's education, work experience, and completed projects. The page functions as an interactive résumé, complemented by a downloadable PDF version of his CV and at least two AI-generated images.
 
 ### In scope
-- Portfolio page component (`src/pages/Portfolio.tsx`) rendered inside `Layout`
-- Education section: ≥ 1 institution entry, reverse chronological order
-- Work experience section: ≥ 1 role entry, reverse chronological order, with responsibilities / achievements
-- Projects / portfolio section: ≥ 1 project entry with name, tech stack, description, and image
-- Downloadable PDF résumé — linked from the page, file stored in `public/assets/`
-- At least 2 AI-generated images with proper `alt` text, tool documented in this spec
-- All content sourced from `src/lib/data.ts`
+- Route `/portfolio` renders the Portfolio page component
+- Education section: at least one institution, reverse chronological order
+- Work experience section: at least one role, reverse chronological order
+- Project/portfolio section: at least one project with name, tech, description, and image
+- Downloadable PDF link (CV) surfaced on the page
+- At least 2 AI-generated images integrated into the page with proper `alt` text
+- All section content sourced from `src/lib/data.ts` (not hardcoded in components)
+- Page renders inside the `Layout` component (header + footer inherited)
 
 ### Out of scope
-- Contact form — covered in Feature 05
-- Admin / Supabase interaction — covered in Features 05–07
-- Dark / light mode styling — covered in Feature 08
-- Animation / scroll reveals — covered in Feature 08
-- CV generation at runtime — the PDF is a pre-exported static file
+- Contact form — covered in a separate Contact page feature
+- Admin / back office — covered in separate feature specs
+- Blog or editorial content
 - Filtering or searching projects
+- Animated page transitions between routes
 
 ---
 
 ## 2. Requirements Breakdown
 
-### R1 — Portfolio page route
-- The Portfolio page is accessible via the navigation (nav link label: "Portfolio" or "Résumé")
-- Because the portfolio is a single scrollable page (per `ai-spec.md` Rule 2), this nav link scrolls to a `#portfolio` anchor on the Home page **or** the page is a dedicated route — decision: use a **dedicated route `/portfolio`** since this page contains substantial standalone content (résumé + projects)
-- Renders inside `<Layout>` — header and footer inherited automatically
+### R1 — Portfolio route
+- The route `/portfolio` maps to `src/pages/Portfolio.tsx`
+- The page renders inside `<Layout>` so the header and footer appear automatically
+- "Portfolio" nav link in the header is active/highlighted when on this route
 
 ### R2 — Education section
 - Section ID: `#education`
-- Section heading: "Education" (h2)
-- Displays ≥ 1 educational institution entry
+- Visible heading (h2 level): e.g. "Education"
+- At least one educational institution listed
 - Each entry must include:
-  - **Institution name** (e.g. "CodeBoxx Technology")
-  - **Degree / program** (e.g. "Full-Stack Development Program")
-  - **Dates** — start and end (or "Present"), formatted consistently (e.g. "Sept 2024 – May 2026")
-- Entries are in **reverse chronological order** — most recent first
-- Content sourced from `EDUCATION` array in `src/lib/data.ts`
+  - **Institution name** (e.g. CodeBoxx Technology)
+  - **Degree / program** (e.g. Full-Stack Development Certificate)
+  - **Dates** (start – end, or start – present)
+- Entries displayed in **reverse chronological order** (most recent first)
+- Content sourced from `src/lib/data.ts` as an `EDUCATION` array
 
 ### R3 — Work experience section
 - Section ID: `#experience`
-- Section heading: "Experience" (h2)
-- Displays ≥ 1 work experience entry
+- Visible heading (h2 level): e.g. "Work Experience"
+- At least one work experience entry listed
 - Each entry must include:
-  - **Title / role** (e.g. "Junior Developer")
-  - **Organization** (e.g. "Acme Corp")
-  - **Dates** — start and end (or "Present"), formatted consistently
-  - **Description** — ≥ 1 sentence mentioning responsibilities or achievements (not a single-word tag)
-- Entries are in **reverse chronological order** — most recent first
-- Content sourced from `WORK_EXPERIENCE` array in `src/lib/data.ts`
+  - **Title / role** (e.g. Junior Developer)
+  - **Organization** (e.g. Freelance)
+  - **Dates** (start – end, or start – present)
+  - **Description**: one or more sentences mentioning responsibilities or achievements
+- Entries displayed in **reverse chronological order** (most recent first)
+- Content sourced from `src/lib/data.ts` as a `WORK_EXPERIENCE` array
 
-### R4 — Projects / portfolio section
+### R4 — Project / portfolio section
 - Section ID: `#projects`
-- Section heading: "Projects" (h2)
-- Displays ≥ 1 project entry
-- Each entry must include:
+- Visible heading (h2 level): e.g. "Projects"
+- At least one project listed
+- Each project entry must include:
   - **Project name**
-  - **Tech stack** — list of technologies used (e.g. ["React", "Supabase", "Vite"])
-  - **Description** — ≥ 2 sentences explaining what the project is and its purpose
-  - **Image** — a screenshot, mockup, or AI-generated illustration representing the project; must have `alt` text
-- Layout is visually organized: cards, grid, or horizontal timeline — not a plain list
-- Content sourced from `PROJECTS` array in `src/lib/data.ts`
+  - **Tech stack**: array of technology labels (e.g. `['React', 'Node.js', 'MySQL']`)
+  - **Description**: explains what the project is and its purpose (at least 2 sentences)
+  - **Image**: a project screenshot or placeholder image with meaningful `alt` text
+- Content sourced from `src/lib/data.ts` — reuse or extend the existing `PROJECTS` array
+- Project images stored in `public/assets/images/`
 
-### R5 — Downloadable PDF résumé
-- A clearly labelled button or link ("Download CV" / "Download Résumé") is visible on the page
-- Clicking it triggers a browser download of a PDF file
-- The PDF is stored as a static file: `public/assets/charles-winfield-cv.pdf`
-- Link uses the `download` attribute: `<a href="/assets/charles-winfield-cv.pdf" download>`
-- The PDF is a pre-exported document (Word → PDF, Canva → PDF, or equivalent) — not generated at runtime
+### R5 — Downloadable CV / PDF
+- A clearly labelled download link or button is present on the page
+- Label: "Download CV" or "Download Résumé"
+- Links to `public/assets/charles-winfield-cv.pdf` via an `<a href="..." download>` element
+- Uses the global `.btn` style so it is visually consistent with the rest of the site
+- If the PDF file is not yet present, the link renders but the file is noted as a placeholder
 
-### R6 — Visual section structure
-- The page has **at least 3 distinct sections**: Education, Experience, Projects
-- Sections are visually separated by spacing, alternating background colours, or dividers
-- Each section has a visible h2 heading
-- Sections are in a logical reading order: Education → Experience → Projects (or reverse, as long as consistent)
+### R6 — Layout & visual separation
+- The page has at least **3 distinct sections**: Education, Work Experience, Projects
+- Sections are visually separated by one or more of: vertical spacing, alternating background colours, or a horizontal divider
+- Each section has a visible heading at the h2 level
+- No section bleeds visually into the next
 
 ### R7 — AI-generated images
-- **At least 2** images on the page are generated using an AI image tool
-- Suitable uses: section header illustration, decorative background element, avatar / portrait, project placeholder image
-- Saved to `public/assets/` (e.g. `public/assets/portfolio-hero.png`, `public/assets/project-placeholder.png`)
-- Each image has a non-empty, meaningful `alt` attribute
-- The AI tool and prompt summary are documented in Section 4 of this spec
+- At least **2** images on the page are generated using an AI image tool
+- Recommended tools: DALL·E 3 (ChatGPT), Adobe Firefly, Midjourney, Gemini
+- Images are saved to `public/assets/images/`
+- Each image has a meaningful, non-empty `alt` attribute
+- The AI tool and prompt used to generate each image are documented in Section 4 of this spec
+- Images are contextually relevant: section headers, project thumbnails, or decorative illustrations
 
 ---
 
@@ -98,20 +99,20 @@ Build the Portfolio page — a combined résumé and project showcase. It presen
 ### Pages
 | Route | Component | Notes |
 |---|---|---|
-| `/portfolio` | `src/pages/Portfolio.tsx` | Assembles all three sections; renders inside `Layout` |
+| `/portfolio` | `src/pages/Portfolio.tsx` | Assembles all sections; renders inside `Layout` |
 
 ### Section components
 | File | Section | ID |
 |---|---|---|
-| `src/components/sections/Education.tsx` | Education history entries | `#education` |
-| `src/components/sections/Experience.tsx` | Work experience entries | `#experience` |
-| `src/components/sections/Projects.tsx` | Project / portfolio cards | `#projects` |
+| `src/components/sections/PortfolioEducation.tsx` | Education timeline | `#education` |
+| `src/components/sections/PortfolioExperience.tsx` | Work experience timeline | `#experience` |
+| `src/components/sections/PortfolioProjects.tsx` | Project cards | `#projects` |
 
 ### Shared / UI components
 | File | Purpose |
 |---|---|
-| `src/components/ui/TimelineEntry.tsx` | Reusable entry: institution/org, role/degree, dates, description (used by Education + Experience) |
-| `src/components/ui/ProjectCard.tsx` | Reusable card: name, tech tags, description, image |
+| `src/components/ui/TimelineEntry.tsx` | Reusable entry: title, organisation, dates, description (used by Education + Experience) |
+| `src/components/ui/ProjectCard.tsx` | Reusable card: image, name, tech tags, description |
 
 ### Data
 | File | Exports |
@@ -121,170 +122,147 @@ Build the Portfolio page — a combined résumé and project showcase. It presen
 ### Types
 | File | Interfaces |
 |---|---|
-| `src/types/index.ts` | `EducationEntry`, `WorkEntry`, `Project` |
+| `src/types/index.ts` | `EducationEntry`, `WorkEntry`, `Project` (extended with image field) |
 
 ### Assets
 | File | Purpose |
 |---|---|
-| `public/assets/charles-winfield-cv.pdf` | Static downloadable résumé PDF |
-| `public/assets/portfolio-hero.png` | AI-generated page hero / section illustration |
-| `public/assets/project-placeholder.png` | AI-generated project image (if no screenshot available) |
+| `public/assets/charles-winfield-cv.pdf` | Downloadable CV — linked via `<a download>` |
+| `public/assets/images/portfolio-hero.png` | AI-generated image — portfolio page header area |
+| `public/assets/images/portfolio-experience.png` | AI-generated image — work/experience section accent |
 
 ---
 
 ## 4. Data, Validations & Expected Behaviour
 
-### `EducationEntry` interface
+### `EducationEntry` interface (`src/types/index.ts`)
 ```ts
 export interface EducationEntry {
   id: string;
-  institution: string;   // required, non-empty
-  program: string;       // required, non-empty
-  startDate: string;     // e.g. "Sept 2024"
-  endDate: string;       // e.g. "May 2026" | "Present"
+  institution: string;
+  program: string;
+  startDate: string;   // e.g. 'Jan 2024'
+  endDate: string;     // e.g. 'Apr 2025' or 'Present'
 }
 ```
 
-### `EDUCATION` array (minimum)
+### `EDUCATION` array (`src/lib/data.ts`)
 ```ts
 export const EDUCATION: EducationEntry[] = [
   {
     id: 'codeboxx',
     institution: 'CodeBoxx Technology',
-    program: 'Full-Stack Development Program',
-    startDate: 'Sept 2024',
-    endDate: 'May 2026',
+    program: 'Full-Stack Development Certificate',
+    startDate: 'Jan 2024',
+    endDate: 'Apr 2025',
   },
-  // most recent first — add more entries above older ones
-];
+  // most recent first
+]
 ```
 
-### `WorkEntry` interface
+### `WorkEntry` interface (`src/types/index.ts`)
 ```ts
 export interface WorkEntry {
   id: string;
-  role: string;           // required, non-empty
-  organization: string;   // required, non-empty
+  role: string;
+  organization: string;
   startDate: string;
-  endDate: string;        // "Present" if current
-  description: string;    // ≥ 1 sentence — required, never empty
+  endDate: string;     // 'Present' if current
+  description: string; // ≥ 1 sentence mentioning responsibilities or achievements
 }
 ```
 
-### `WORK_EXPERIENCE` array (minimum)
+### `WORK_EXPERIENCE` array (`src/lib/data.ts`)
 ```ts
 export const WORK_EXPERIENCE: WorkEntry[] = [
   {
-    id: 'role-1',
-    role: 'Full-Stack Developer (Student)',
-    organization: 'CodeBoxx Technology',
-    startDate: 'Sept 2024',
+    id: 'freelance',
+    role: 'Freelance Full-Stack Developer',
+    organization: 'Self-Employed',
+    startDate: 'Jan 2025',
     endDate: 'Present',
-    description: 'Built 15 full-stack modules simulating real client projects — covering React, Node.js, REST APIs, SQL databases, and cloud deployment.',
+    description:
+      'Designing and developing full-stack web applications for clients, from requirements gathering through to deployment. Responsibilities include front-end architecture with React, back-end API design with Node.js, and database modelling with PostgreSQL.',
   },
   // most recent first
-];
+]
 ```
 
-### `Project` interface
+### `Project` interface (extend existing in `src/types/index.ts`)
 ```ts
 export interface Project {
   id: string;
-  name: string;           // required, non-empty
-  tech: string[];         // ≥ 1 technology — required
-  description: string;    // ≥ 2 sentences — required
-  image: string;          // path to image in public/assets/ — required
-  imageAlt: string;       // non-empty alt text — required
-  repoUrl?: string;       // optional GitHub link
-  liveUrl?: string;       // optional live demo link
+  name: string;
+  subtitle: string;
+  year: string;
+  category: string;
+  tech: string[];
+  description: string;  // ≥ 2 sentences explaining purpose
+  image: string;        // path to image in public/assets/images/
+  imageAlt: string;     // non-empty, meaningful alt text
+  repoUrl: string;
+  liveUrl?: string;
 }
-```
-
-### `PROJECTS` array (minimum)
-```ts
-export const PROJECTS: Project[] = [
-  {
-    id: 'portfolio',
-    name: 'Personal Portfolio',
-    tech: ['React', 'Vite', 'TypeScript', 'Supabase', 'GitHub Actions'],
-    description: 'A personal developer portfolio built from scratch as the final module of the Full-Stack Development Program. Showcases projects, skills, and experience, with a Supabase-backed contact form and admin back office.',
-    image: '/assets/project-placeholder.png',
-    imageAlt: 'Screenshot of the personal portfolio website',
-    repoUrl: 'https://github.com/charleswinfield108/charleswinfield.github.io',
-    liveUrl: 'https://charleswinfield.github.io',
-  },
-  // add more projects
-];
 ```
 
 ### AI image documentation
 | Image file | AI tool used | Prompt summary |
 |---|---|---|
-| `public/assets/portfolio-hero.png` | *(fill in after generation)* | Professional résumé / career-themed hero illustration |
-| `public/assets/project-placeholder.png` | *(fill in after generation)* | Abstract tech / development themed project image |
+| `public/assets/images/portfolio-hero.png` | *(fill in after generation)* | Professional developer workspace / portfolio header illustration |
+| `public/assets/images/portfolio-experience.png` | *(fill in after generation)* | Abstract career/timeline theme for experience section |
 
 > **Action required:** After generating images, update the table above with the tool name and a brief prompt description.
 
 ### Validation rules
-- All `description` fields must be non-empty strings — TypeScript enforces this (no `?` on the field)
-- `Project.imageAlt` must be non-empty — enforced by type (no `?`)
-- `Project.tech` must have ≥ 1 entry — enforced by type (`string[]`, validated in code review)
-- Date strings must follow a consistent format across all entries (e.g. "Mon YYYY" — enforced by convention, documented here)
-- The PDF file must exist at `public/assets/charles-winfield-cv.pdf` before the feature is merged
+- `description` on every `WorkEntry` must be a non-empty string — enforced by TypeScript (not optional)
+- `imageAlt` on every `Project` must be a non-empty string
+- `EDUCATION` and `WORK_EXPERIENCE` arrays must each have at least one entry
+- `PROJECTS` array must have at least one entry with a non-empty `image` path
+- Entries within each array must be in reverse chronological order (most recent `startDate` first)
 
 ### Expected behaviour
-- PDF download link opens a browser download dialogue (or downloads directly) — it does not open in a new tab unless the browser forces it
-- All project images load without broken-image placeholders; use explicit `aspect-ratio` or `width`/`height` to prevent layout shift
-- Education and experience entries are visually ordered most-recent-first — the data array order determines render order, so the array must be kept in reverse chronological order
+- Page loads at `/portfolio` without a redirect
+- All three sections are visible on a single scroll
+- Download CV link triggers a file download (or opens the PDF in a new tab if `download` attribute is unsupported)
+- Project images load without broken-image placeholders; layout does not shift on image load
 
 ---
 
 ## 5. User Flow
 
 ```
-User clicks "Portfolio" / "Résumé" in the navigation
+User clicks "Portfolio" in the nav
         │
         ▼
 /portfolio loads inside Layout (Header + Footer inherited)
         │
         ▼
-Page hero / introduction visible above fold
-  → AI-generated image + page title ("Portfolio" or "Résumé")
-  → "Download CV" button
+Page header / hero area visible above the fold
+  → Name or page title, Download CV button, AI-generated hero image
         │
         ▼
 User scrolls down
         │
         ▼
 Education section (#education)
-  → Most recent institution first
-  → Each entry: institution name, program, dates
+  → Section heading, timeline of institution + program + dates (most recent first)
         │
         ▼
 User scrolls down
         │
         ▼
-Experience section (#experience)
-  → Most recent role first
-  → Each entry: role, organization, dates, description of responsibilities
+Work Experience section (#experience)
+  → Section heading, timeline of role + org + dates + description (most recent first)
         │
         ▼
 User scrolls down
         │
         ▼
 Projects section (#projects)
-  → Cards/grid: project name, tech tags, description, image
-  → Optional: repo / live demo links per card
+  → Section heading, project cards (image + name + tech + description)
         │
         ▼
 Footer (rendered by Layout)
-
-────────────────────────
-Download flow (any point on page):
-        │
-User clicks "Download CV"
-        ▼
-Browser downloads charles-winfield-cv.pdf
 ```
 
 ---
@@ -294,52 +272,52 @@ Browser downloads charles-winfield-cv.pdf
 All criteria must pass before merging `feature/portfolio-page` → `dev`.
 
 ### Routing
-- [ ] **AC1** — `/portfolio` loads the Portfolio page without a redirect
+- [ ] **AC1** — Visiting `/portfolio` loads the Portfolio page without a redirect
 - [ ] **AC2** — The page renders inside `Layout` — header and footer are present
-- [ ] **AC3** — The navigation contains a link that takes the user to this page
+- [ ] **AC3** — The "Portfolio" nav link is active/highlighted when on this route
 
 ### Education section
-- [ ] **AC4** — At least one education entry is displayed
-- [ ] **AC5** — Every entry includes institution name, program/degree, and start + end dates
+- [ ] **AC4** — At least one educational institution is listed under a visible "Education" heading
+- [ ] **AC5** — Each entry displays institution name, degree/program, and dates
 - [ ] **AC6** — Entries are in reverse chronological order (most recent first)
 
 ### Work experience section
-- [ ] **AC7** — At least one work experience entry is displayed
-- [ ] **AC8** — Every entry includes role/title, organization, dates, and a description of ≥ 1 sentence
-- [ ] **AC9** — Descriptions mention responsibilities or achievements — not just a job title repeated
+- [ ] **AC7** — At least one work experience entry is listed under a visible "Work Experience" heading
+- [ ] **AC8** — Each entry displays title/role, organization, dates, and a description
+- [ ] **AC9** — Descriptions mention responsibilities or achievements (not just a job title)
 - [ ] **AC10** — Entries are in reverse chronological order (most recent first)
 
 ### Projects section
-- [ ] **AC11** — At least one project is displayed
-- [ ] **AC12** — Every project includes name, tech stack, description of ≥ 2 sentences, and an image
-- [ ] **AC13** — Every project image has a non-empty `alt` attribute
-- [ ] **AC14** — Project descriptions explain what the project is and its purpose
+- [ ] **AC11** — At least one project is listed under a visible "Projects" heading
+- [ ] **AC12** — Each project displays a name, tech stack, description, and image
+- [ ] **AC13** — Descriptions explain what the project is and its purpose (≥ 2 sentences)
+- [ ] **AC14** — All project images have non-empty, meaningful `alt` text
 
-### PDF download
-- [ ] **AC15** — A clearly labelled download button or link is visible on the page
-- [ ] **AC16** — Clicking it triggers a download of `charles-winfield-cv.pdf`
-- [ ] **AC17** — The PDF file exists at `public/assets/charles-winfield-cv.pdf` and is not empty
+### Downloadable CV
+- [ ] **AC15** — A "Download CV" or "Download Résumé" link is visible on the page
+- [ ] **AC16** — The link uses `<a href="/assets/charles-winfield-cv.pdf" download>` or equivalent
+- [ ] **AC17** — The link is styled consistently with the global `.btn` system
 
-### Visual structure
-- [ ] **AC18** — The page has at least 3 visually distinct sections (Education, Experience, Projects) with h2 headings
-- [ ] **AC19** — Sections are visually separated — no content bleeding between sections
+### Layout
+- [ ] **AC18** — The page has at least 3 visually distinct sections with clear h2 headings
+- [ ] **AC19** — Sections are separated by spacing, background colour, or dividers — no visual bleeding
 
 ### AI-generated images
 - [ ] **AC20** — At least 2 images on the page were generated by an AI tool
-- [ ] **AC21** — Both images are stored in `public/assets/`
+- [ ] **AC21** — Both images are stored in `public/assets/images/`
 - [ ] **AC22** — Both images have non-empty, meaningful `alt` text
-- [ ] **AC23** — The AI tool and prompt summary are documented in the Section 4 table of this spec
+- [ ] **AC23** — The AI tool and prompt summary are documented in Section 4 of this spec
 
 ### Data & code quality
-- [ ] **AC24** — All content (education, experience, projects) lives in `src/lib/data.ts`, not hardcoded in components
+- [ ] **AC24** — All content (education, work, projects) lives in `src/lib/data.ts`, not hardcoded in components
 - [ ] **AC25** — `tsc --noEmit` passes with zero errors
 - [ ] **AC26** — `npm run build` succeeds with zero errors
+- [ ] **AC27** — No `any` types used — `unknown` + type narrowing where needed
 
 ### Responsive
-- [ ] **AC27** — Page layout is correct and readable at 375px, 768px, and 1280px viewports
-- [ ] **AC28** — No horizontal scrolling appears on a 375px viewport
-- [ ] **AC29** — Project images scale correctly and do not overflow their containers on mobile
+- [ ] **AC28** — Page layout is correct and readable at 375px, 768px, and 1280px viewports
+- [ ] **AC29** — No horizontal scrolling appears on a 375px viewport
 
 ---
 
-*Last updated: 2026-04-26 | Depends on: ai-spec.md, header-footer.feature.md | Next: contact-form.feature.md*
+*Last updated: 2026-04-28 | Depends on: ai-spec.md, home-page.feature.md | Next: Links page, Contact page*
