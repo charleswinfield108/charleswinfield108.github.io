@@ -87,8 +87,24 @@ try {
   console.log(`Navigating to ${url}`)
   await page.goto(url, { waitUntil: 'networkidle0' })
 
-  // Let scroll-triggered animations settle
-  await new Promise(r => setTimeout(r, 1000))
+  // Scroll incrementally to trigger IntersectionObserver-based reveal animations
+  await page.evaluate(async () => {
+    await new Promise(resolve => {
+      const distance = 200
+      const delay = 80
+      const timer = setInterval(() => {
+        window.scrollBy(0, distance)
+        if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+          clearInterval(timer)
+          window.scrollTo(0, 0)
+          resolve()
+        }
+      }, delay)
+    })
+  })
+
+  // Let all animations finish after scroll
+  await new Promise(r => setTimeout(r, 1500))
 
   const filename = `${timestamp()}-${slugify(routeArg)}-${VIEWPORT_WIDTH}w.png`
   const outPath = join(outDir, filename)
