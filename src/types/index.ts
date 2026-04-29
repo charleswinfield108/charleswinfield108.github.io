@@ -32,3 +32,21 @@ export interface SocialLink {
   icon: string
   imageAlt: string
 }
+
+export interface EducationEntry {
+  id: string
+  institution: string
+  program: string
+  startDate: string
+  endDate: string
+  description: string
+}
+
+export interface WorkEntry {
+  id: string
+  role: string
+  organization: string
+  startDate: string
+  endDate: string
+  description: string
+}

@@ -1,4 +1,4 @@
-import type { ProgressSkill, TechIcon, Project, SocialLink } from '../types'
+import type { ProgressSkill, TechIcon, Project, SocialLink, EducationEntry, WorkEntry } from '../types'
 
 export const BIO = {
   name: 'Charles Winfield',
@@ -116,6 +116,57 @@ export const PROJECTS: Project[] = [
     image: '',
     imageAlt: 'Rocket Food Delivery app preview',
     repoUrl: 'https://github.com/charleswinfield108',
+  },
+]
+
+export const EDUCATION: EducationEntry[] = [
+  {
+    id: 'codeboxx',
+    institution: 'CodeBoxx Technology',
+    program: 'Full Stack MERN Developer',
+    startDate: 'Jan 2026',
+    endDate: 'Present',
+    description:
+      'Developing full-stack web applications using the MERN stack (MongoDB, Express, React, Node.js) across 16 intensive modules. Completed 30+ development projects spanning corporate websites, food delivery platforms, mobile apps, and API-driven dashboards.',
+  },
+  {
+    id: 'cscc',
+    institution: 'Columbus State Community College',
+    program: 'Interactive Multimedia',
+    startDate: 'Aug 2012',
+    endDate: 'May 2015',
+    description:
+      'Studied Interactive Multimedia, gaining foundational skills in digital design, web development, and user interface principles that continue to inform my approach to front-end development.',
+  },
+]
+
+export const WORK_EXPERIENCE: WorkEntry[] = [
+  {
+    id: 'freelance',
+    role: 'Freelance Web Designer',
+    organization: 'Freelance',
+    startDate: 'Jan 2020',
+    endDate: 'Present',
+    description:
+      'Designed and developed responsive websites for independent clients, agencies, and small businesses across the Columbus, Ohio area and remotely. Worked directly with stakeholders to gather requirements, translate designs into production-ready code, and deliver polished digital experiences on time and within budget.',
+  },
+  {
+    id: 'customer-service',
+    role: 'Customer Service Associate',
+    organization: 'Various Organizations',
+    startDate: 'Oct 2001',
+    endDate: 'Jan 2020',
+    description:
+      'Provided customer-facing support across multiple organizations, developing strong communication, conflict-resolution, and problem-solving skills. Built a consistent track record of reliability and adaptability across diverse industries and team environments.',
+  },
+  {
+    id: 'army',
+    role: 'Administrative Sergeant',
+    organization: 'US Army',
+    startDate: 'Feb 1997',
+    endDate: 'Oct 2001',
+    description:
+      'Served in the United States Army, attaining the rank of Sergeant with an Honorable Discharge. Supported personnel administration and leadership coordination, building strong organizational discipline, team leadership, and the ability to perform under pressure.',
   },
 ]
 

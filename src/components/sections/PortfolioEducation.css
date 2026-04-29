@@ -1,0 +1,132 @@
+.p-education {
+  background: transparent;
+}
+
+/* ── Section header ── */
+.p-education__header {
+  margin-bottom: 56px;
+}
+
+.p-section-title {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  color: var(--white);
+  margin-top: 12px;
+}
+
+/* ── Shared timeline ── */
+.p-timeline {
+  position: relative;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.p-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--teal), rgba(34, 177, 196, 0.1));
+  border-radius: 2px;
+}
+
+.p-timeline__entry {
+  position: relative;
+}
+
+.p-timeline__dot {
+  position: absolute;
+  left: -40px;
+  top: 28px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 3px solid var(--navy-dark);
+  box-shadow: 0 0 0 2px var(--teal);
+  flex-shrink: 0;
+}
+
+/* ── Entry card ── */
+.p-timeline__card {
+  background: rgba(13, 16, 40, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(34, 177, 196, 0.15);
+  border-radius: 16px;
+  padding: 28px 32px;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.p-timeline__card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--teal), rgba(110, 60, 220, 0.6), transparent);
+  opacity: 0.6;
+  transition: opacity 0.35s ease;
+}
+
+.p-timeline__card:hover {
+  transform: translateX(8px);
+  border-color: rgba(34, 177, 196, 0.35);
+  box-shadow: 0 8px 32px rgba(34, 177, 196, 0.1);
+}
+
+.p-timeline__card:hover::before { opacity: 1; }
+
+.p-timeline__date {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+
+.p-timeline__name {
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.p-timeline__program {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--silver);
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  opacity: 0.75;
+}
+
+.p-timeline__desc {
+  font-size: 14px;
+  color: var(--silver);
+  line-height: 1.85;
+  opacity: 0.8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .p-timeline {
+    padding-left: 28px;
+  }
+
+  .p-timeline__dot {
+    left: -26px;
+    width: 12px;
+    height: 12px;
+    top: 28px;
+  }
+
+  .p-timeline__card {
+    padding: 20px 20px;
+  }
+}
