@@ -38,7 +38,7 @@ export default function PortfolioHero() {
             <div className="p-hero__card">
               <div className="p-hero__img-wrap">
                 <img
-                  src="/assets/images/hero-image.png"
+                  src="/assets/images/cw-hero-ai.png"
                   alt="Charles Winfield — Full-Stack Developer and U.S. Army Veteran"
                   className="p-hero__img"
                 />

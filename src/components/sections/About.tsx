@@ -16,7 +16,7 @@ export default function About() {
           >
             <div className="about__image-frame">
               <img
-                src="/assets/images/hero-image.png"
+                src="/assets/images/cw-hero-ai.png"
                 alt="Charles Winfield"
                 className="about__image"
               />

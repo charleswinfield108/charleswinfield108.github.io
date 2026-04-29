@@ -33,7 +33,7 @@ export default function Hero() {
             <div className="hero__profile-card">
               <div className="hero__profile-img-wrap">
                 <img
-                  src="/assets/images/hero-image.png"
+                  src="/assets/images/cw-hero-ai.png"
                   alt="Charles Winfield"
                   className="hero__profile-img"
                 />
