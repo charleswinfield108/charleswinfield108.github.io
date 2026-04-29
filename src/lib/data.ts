@@ -195,7 +195,7 @@ export const LINKS: ExternalLink[] = [
     description:
       'An essential resource for modern CSS techniques, layout patterns, and front-end best practices. The Flexbox and Grid guides alone are worth bookmarking.',
     url: 'https://css-tricks.com/',
-    image: '/assets/links/css-tricks.png',
+    image: '/assets/links/css-tricks.svg',
     imageAlt: 'CSS-Tricks logo',
   },
   {
