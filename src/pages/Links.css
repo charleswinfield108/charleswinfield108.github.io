@@ -27,6 +27,13 @@
   margin-bottom: 16px;
 }
 
+.links__title-gradient {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--yellow) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .links__subtitle {
   font-size: 16px;
   color: var(--silver);

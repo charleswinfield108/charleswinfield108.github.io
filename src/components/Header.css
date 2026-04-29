@@ -104,6 +104,13 @@
   margin-top: 10px;
 }
 
+.header__nav-gradient {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--yellow) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .header__hire {
   padding: 8px 16px;
   font-size: 11px;

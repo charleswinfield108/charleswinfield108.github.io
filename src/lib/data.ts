@@ -172,40 +172,58 @@ export const WORK_EXPERIENCE: WorkEntry[] = [
 
 export const LINKS: ExternalLink[] = [
   {
-    id: 'github',
-    title: 'GitHub',
+    id: 'w3schools',
+    title: 'W3Schools',
     description:
-      'Browse my public repositories, open-source contributions, and the source code behind every project in my portfolio. Most of my work lives here.',
-    url: 'https://github.com/charleswinfield108',
-    image: '/assets/images/link-github.png',
-    imageAlt: 'GitHub profile of Charles Winfield',
+      'My go-to reference for HTML, CSS, JavaScript, and web APIs. Clear examples and a built-in editor make it easy to test concepts on the fly.',
+    url: 'https://www.w3schools.com/',
+    image: '/assets/links/w3schools.png',
+    imageAlt: 'W3Schools logo',
   },
   {
-    id: 'linkedin',
-    title: 'LinkedIn',
+    id: 'freecodecamp',
+    title: 'freeCodeCamp',
     description:
-      'Connect with me professionally. My profile includes my full work history, education, and the story behind my transition into full-stack development.',
-    url: 'https://linkedin.com/in/charles-winfield',
-    image: '/assets/images/link-linkedin.png',
-    imageAlt: 'LinkedIn profile of Charles Winfield',
+      'A free, project-based learning platform covering full-stack development, algorithms, and data structures. Great for reinforcing fundamentals and earning certifications.',
+    url: 'https://www.freecodecamp.org/',
+    image: '/assets/links/freecodecamp.png',
+    imageAlt: 'freeCodeCamp logo',
   },
   {
-    id: 'portfolio-live',
-    title: 'Live Portfolio',
+    id: 'css-tricks',
+    title: 'CSS-Tricks',
     description:
-      'The deployed version of this portfolio on GitHub Pages — a good starting point for anyone who wants to see my work, skills, and contact information.',
-    url: 'https://charleswinfield.github.io',
-    image: '/assets/images/link-portfolio.png',
-    imageAlt: 'Live portfolio website — charleswinfield.github.io',
+      'An essential resource for modern CSS techniques, layout patterns, and front-end best practices. The Flexbox and Grid guides alone are worth bookmarking.',
+    url: 'https://css-tricks.com/',
+    image: '/assets/links/css-tricks.png',
+    imageAlt: 'CSS-Tricks logo',
   },
   {
-    id: 'leetcode',
-    title: 'LeetCode',
+    id: 'nodejs',
+    title: 'Node.js',
     description:
-      'My LeetCode profile where I practice data structures and algorithms. Solving challenges regularly to sharpen problem-solving skills beyond the full-stack curriculum.',
-    url: 'https://leetcode.com/charleswinfield108',
-    image: '/assets/images/link-leetcode.png',
-    imageAlt: 'LeetCode profile of Charles Winfield',
+      'The official Node.js documentation — the definitive reference for the runtime, built-in modules, and APIs used across every back-end project I build.',
+    url: 'https://nodejs.org/',
+    image: '/assets/links/nodejs.svg',
+    imageAlt: 'Node.js logo',
+  },
+  {
+    id: 'mongodb',
+    title: 'MongoDB',
+    description:
+      'Official docs and guides for MongoDB. From schema design to aggregation pipelines, this is my primary reference when working with NoSQL databases.',
+    url: 'https://www.mongodb.com/',
+    image: '/assets/links/mongodb.svg',
+    imageAlt: 'MongoDB logo',
+  },
+  {
+    id: 'tailwind',
+    title: 'Tailwind CSS',
+    description:
+      'The official Tailwind CSS documentation. Utility-first styling that speeds up UI development — I reference the class index and configuration guides constantly.',
+    url: 'https://tailwindcss.com/',
+    image: '/assets/links/tailwind.svg',
+    imageAlt: 'Tailwind CSS logo',
   },
 ]
 
