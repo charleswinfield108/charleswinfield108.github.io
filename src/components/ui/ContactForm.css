@@ -1,0 +1,21 @@
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contact-form__submit {
+  align-self: flex-start;
+  min-width: 180px;
+  justify-content: center;
+}
+
+.contact-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.contact-form__submit:disabled::after {
+  display: none;
+}
