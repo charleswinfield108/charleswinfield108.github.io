@@ -51,8 +51,8 @@ export default function Header() {
               download
               className="btn btn-outline header__hire"
             >
-              <Download size={14} />
               Resume
+              <Download size={14} />
             </a>
             <button
               className="header__menu-btn"

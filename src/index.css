@@ -109,38 +109,51 @@ ul, ol {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 32px;
-  border-radius: 4px;
-  font-size: 13px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  transition: all 0.25s;
+  transition: all 0.3s ease;
   cursor: pointer;
   font-family: var(--sans);
   text-decoration: none;
 }
 
+.btn::after {
+  content: '→';
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.btn:hover::after {
+  transform: translateX(4px);
+}
+
 .btn-primary {
-  background: var(--yellow);
+  background: linear-gradient(135deg, var(--teal) 0%, var(--yellow) 100%);
   color: var(--navy-dark);
-  border: 2px solid var(--yellow);
+  border: none;
 }
 
 .btn-primary:hover {
-  background: transparent;
-  color: var(--yellow);
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--teal) 100%);
+  color: var(--navy-dark);
 }
 
 .btn-outline {
-  background: transparent;
-  color: var(--white);
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  background:
+    linear-gradient(var(--navy-dark), var(--navy-dark)) padding-box,
+    linear-gradient(135deg, var(--teal) 0%, var(--yellow) 100%) border-box;
+  border: 2px solid transparent;
+  color: var(--teal);
 }
 
 .btn-outline:hover {
-  border-color: var(--teal);
-  color: var(--teal);
+  background: linear-gradient(135deg, var(--teal) 0%, var(--yellow) 100%);
+  border-color: transparent;
+  color: var(--navy-dark);
 }
 
 .section-label {
@@ -207,15 +220,11 @@ ul, ol {
 
 /* Enhanced button glow */
 .btn-primary:hover {
-  background: transparent;
-  color: var(--yellow);
-  box-shadow: 0 0 24px rgba(240, 204, 24, 0.25);
+  box-shadow: 0 0 32px rgba(34, 177, 196, 0.3);
 }
 
 .btn-outline:hover {
-  border-color: var(--teal);
-  color: var(--teal);
-  box-shadow: 0 0 24px rgba(34, 177, 196, 0.2);
+  box-shadow: 0 0 28px rgba(34, 177, 196, 0.25);
 }
 
 @media (max-width: 768px) {

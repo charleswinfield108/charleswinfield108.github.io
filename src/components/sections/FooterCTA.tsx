@@ -22,9 +22,9 @@ export default function FooterCTA() {
           </p>
           <a
             href="mailto:charleswinfield108@gmail.com"
-            className="footer-cta__banner-btn"
+            className="btn btn-primary"
           >
-            Get Started &rarr;
+            Get Started
           </a>
         </div>
 

@@ -51,7 +51,6 @@ export default function About() {
               ))}
             </div>
 
-            <a href="#contact" className="btn btn-primary">Let's Work Together</a>
           </div>
         </div>
       </div>

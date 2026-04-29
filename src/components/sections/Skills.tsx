@@ -13,12 +13,20 @@ export default function Skills() {
 
   return (
     <section className="skills section" id="skills">
+      <svg width="0" height="0" style={{ position: 'absolute' }}>
+        <defs>
+          <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#22B1C4" />
+            <stop offset="100%" stopColor="#F0CC18" />
+          </linearGradient>
+        </defs>
+      </svg>
       <div className="container">
 
         {/* Section header */}
         <div className={`skills__header reveal ${cardsVisible ? 'visible' : ''}`}>
           <span className="section-label">What I Know</span>
-          <h2 className="skills__header-title">Technical Skills</h2>
+          <h2 className="skills__soft-title">Technical Skills</h2>
         </div>
 
         {/* 4 skill cards */}

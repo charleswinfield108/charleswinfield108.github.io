@@ -162,9 +162,8 @@
 .works__item-name {
   font-size: clamp(22px, 2.5vw, 34px);
   font-weight: 800;
-  text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--white);
+  color: var(--teal);
   line-height: 1.1;
   margin-bottom: 12px;
 }

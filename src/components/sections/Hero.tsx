@@ -10,13 +10,14 @@ export default function Hero() {
           {/* Left — heading + CTA */}
           <div className="hero__content">
             <h1 className="hero__name">
-              <span className="hero__name-hello">Hello, I'm</span>
-              <span className="hero__name-main">Charles Winfield.</span>
+              <span className="hero__wave">👋</span>
+              <span className="hero__name-hello">Hi, I'm</span>
+              <span className="hero__name-main">Charles</span>
             </h1>
 
             <p className="hero__tagline">
-              I create scalable digital products with{' '}
-              <span className="hero__tagline-accent">AI, experience, and skill.</span>
+              I Create Scalable Digital Products With{' '}
+              <span className="hero__tagline-accent">AI, Experience, And Skill.</span>
             </p>
 
             <p className="hero__bio">{BIO.intro}</p>
