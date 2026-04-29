@@ -1,4 +1,4 @@
-import type { ProgressSkill, TechIcon, Project, SocialLink, EducationEntry, WorkEntry } from '../types'
+import type { ProgressSkill, TechIcon, Project, SocialLink, EducationEntry, WorkEntry, ExternalLink } from '../types'
 
 export const BIO = {
   name: 'Charles Winfield',
@@ -167,6 +167,45 @@ export const WORK_EXPERIENCE: WorkEntry[] = [
     endDate: 'Oct 2001',
     description:
       'Served in the United States Army, attaining the rank of Sergeant with an Honorable Discharge. Supported personnel administration and leadership coordination, building strong organizational discipline, team leadership, and the ability to perform under pressure.',
+  },
+]
+
+export const LINKS: ExternalLink[] = [
+  {
+    id: 'github',
+    title: 'GitHub',
+    description:
+      'Browse my public repositories, open-source contributions, and the source code behind every project in my portfolio. Most of my work lives here.',
+    url: 'https://github.com/charleswinfield108',
+    image: '/assets/images/link-github.png',
+    imageAlt: 'GitHub profile of Charles Winfield',
+  },
+  {
+    id: 'linkedin',
+    title: 'LinkedIn',
+    description:
+      'Connect with me professionally. My profile includes my full work history, education, and the story behind my transition into full-stack development.',
+    url: 'https://linkedin.com/in/charles-winfield',
+    image: '/assets/images/link-linkedin.png',
+    imageAlt: 'LinkedIn profile of Charles Winfield',
+  },
+  {
+    id: 'portfolio-live',
+    title: 'Live Portfolio',
+    description:
+      'The deployed version of this portfolio on GitHub Pages — a good starting point for anyone who wants to see my work, skills, and contact information.',
+    url: 'https://charleswinfield.github.io',
+    image: '/assets/images/link-portfolio.png',
+    imageAlt: 'Live portfolio website — charleswinfield.github.io',
+  },
+  {
+    id: 'leetcode',
+    title: 'LeetCode',
+    description:
+      'My LeetCode profile where I practice data structures and algorithms. Solving challenges regularly to sharpen problem-solving skills beyond the full-stack curriculum.',
+    url: 'https://leetcode.com/charleswinfield108',
+    image: '/assets/images/link-leetcode.png',
+    imageAlt: 'LeetCode profile of Charles Winfield',
   },
 ]
 

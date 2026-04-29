@@ -50,3 +50,12 @@ export interface WorkEntry {
   endDate: string
   description: string
 }
+
+export interface ExternalLink {
+  id: string
+  title: string
+  description: string
+  url: string
+  image: string
+  imageAlt: string
+}
