@@ -1,99 +1,133 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LogOut } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient'
+import { MessagesTable } from '../components/ui/MessagesTable'
+import { ViewMessageModal } from '../components/ui/ViewMessageModal'
+import { DeleteConfirmDialog } from '../components/ui/DeleteConfirmDialog'
+import type { Message } from '../types'
 import './Admin.css'
 
 export default function Admin() {
   const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(true)
-  const [messages, setMessages] = useState<any[]>([])
-  const [error, setError] = useState<string>('')
+  const [messages, setMessages] = useState<Message[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null)
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
-  // Check session and load messages
+  // Check session on mount
   useEffect(() => {
-    const checkAndLoad = async () => {
-      // Check if user is authenticated
-      const { data: { session } } = await supabase.auth.getSession()
-      
-      if (!session) {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession()
+      if (!data.session) {
         navigate('/login')
         return
       }
-
-      // Load messages from Supabase
-      try {
-        const { data, error: fetchError } = await supabase
-          .from('messages')
-          .select('*')
-          .order('created_at', { ascending: false })
-
-        if (fetchError) {
-          setError('Failed to load messages')
-        } else {
-          setMessages(data || [])
-        }
-      } catch (err) {
-        setError('An error occurred while loading messages')
-      } finally {
-        setIsLoading(false)
-      }
+      fetchMessages()
     }
-
-    checkAndLoad()
+    checkSession()
   }, [navigate])
 
-  async function handleLogout() {
-    await supabase.auth.signOut()
-    navigate('/login')
+  // Fetch all messages
+  const fetchMessages = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      const { data, error: fetchError } = await supabase
+        .from('messages')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+      if (fetchError) {
+        throw new Error(fetchError.message)
+      }
+      setMessages(data || [])
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load messages')
+    } finally {
+      setLoading(false)
+    }
   }
 
-  if (isLoading) {
-    return (
-      <main className="admin-page">
-        <div className="admin-page__container">
-          <p>Loading...</p>
-        </div>
-      </main>
-    )
+  // Delete a message
+  const handleDeleteMessage = async (id: string) => {
+    try {
+      setIsDeleting(true)
+      const { error: deleteError } = await supabase
+        .from('messages')
+        .delete()
+        .eq('id', id)
+
+      if (deleteError) {
+        throw new Error(deleteError.message)
+      }
+
+      setMessages(prev => prev.filter(msg => msg.id !== id))
+      setDeleteConfirmId(null)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete message')
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  // Logout
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut()
+      navigate('/')
+    } catch (err) {
+      console.error('Logout error:', err)
+    }
   }
 
   return (
     <main className="admin-page">
-      <div className="admin-page__container">
-        <div className="admin-page__header">
-          <h1>Admin Back Office</h1>
-          <button onClick={handleLogout} className="btn btn-outline">
+      <div className="container">
+        {/* Header */}
+        <div className="admin-header">
+          <div>
+            <span className="section-label">Admin Panel</span>
+            <h1 className="admin-title">Back Office</h1>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="btn btn-primary admin-logout-btn"
+            title="Sign out and return to home"
+          >
+            <LogOut size={16} />
             Sign Out
           </button>
         </div>
 
-        {error && (
-          <div className="admin-page__error">
-            {error}
-          </div>
-        )}
-
-        {messages.length === 0 ? (
-          <div className="admin-page__empty">
-            <p>No messages yet</p>
-          </div>
-        ) : (
-          <div className="admin-page__messages">
-            {messages.map((msg) => (
-              <div key={msg.id} className="admin-page__message">
-                <div className="admin-page__message-header">
-                  <h3>{msg.name}</h3>
-                  <span className="admin-page__message-email">{msg.email}</span>
-                </div>
-                <p className="admin-page__message-body">{msg.message}</p>
-                <span className="admin-page__message-date">
-                  {new Date(msg.created_at).toLocaleString()}
-                </span>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Messages Table */}
+        <div className="admin-content">
+          <MessagesTable
+            messages={messages}
+            isLoading={loading}
+            error={error}
+            onViewMessage={setSelectedMessage}
+            onDeleteMessage={(id) => setDeleteConfirmId(id)}
+            isDeleting={isDeleting}
+          />
+        </div>
       </div>
+
+      {/* View Message Modal */}
+      <ViewMessageModal
+        message={selectedMessage}
+        onClose={() => setSelectedMessage(null)}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <DeleteConfirmDialog
+        isOpen={deleteConfirmId !== null}
+        onConfirm={() => deleteConfirmId && handleDeleteMessage(deleteConfirmId)}
+        onCancel={() => setDeleteConfirmId(null)}
+        isLoading={isDeleting}
+      />
     </main>
   )
 }

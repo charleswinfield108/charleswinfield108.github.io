@@ -1,6 +1,7 @@
 import { LINKS } from '../lib/data'
 import { useReveal } from '../hooks/useReveal'
 import { LinkCard } from '../components/ui/LinkCard'
+import FooterCTA from '../components/sections/FooterCTA'
 import './Links.css'
 
 export default function Links() {
@@ -16,10 +17,10 @@ export default function Links() {
             className={`links__header reveal ${headerVisible ? 'visible' : ''}`}
             ref={headerRef as React.RefObject<HTMLDivElement>}
           >
-            <span className="section-label">Find Me Online</span>
+            <span className="section-label">Tools of the Trade</span>
             <h1 className="links__title">Links & <span className="links__title-gradient">Resources</span></h1>
             <p className="links__subtitle">
-              Everything in one place — profiles, projects, and places to connect.
+              The resources, references, and tools I rely on every day as a developer.
             </p>
           </div>
 
@@ -39,6 +40,7 @@ export default function Links() {
 
         </div>
       </section>
+      <FooterCTA />
     </main>
   )
 }

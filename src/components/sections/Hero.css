@@ -169,6 +169,14 @@
   gap: 12px;
 }
 
+/* ── Badge row ── */
+.hero__profile-body-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 /* ── Badge ── */
 .hero__badge {
   display: inline-flex;
@@ -183,6 +191,13 @@
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--teal);
+  align-self: flex-end;
+}
+
+.hero__badge--yellow {
+  border-color: rgba(255, 200, 0, 0.4);
+  background: rgba(255, 200, 0, 0.07);
+  color: var(--yellow);
   align-self: flex-start;
 }
 
@@ -193,6 +208,10 @@
   background: var(--teal);
   animation: badgePulse 2s ease-in-out infinite;
   flex-shrink: 0;
+}
+
+.hero__badge-dot--yellow {
+  background: var(--yellow);
 }
 
 @keyframes badgePulse {
@@ -246,6 +265,29 @@
   width: 1px;
   height: 28px;
   background: var(--border);
+}
+
+/* ── Tech pills ── */
+.hero__tech-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  justify-content: space-between;
+}
+
+.hero__tech-pill {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(193, 186, 186, 0.2);
+  color: var(--silver);
+  opacity: 0.75;
 }
 
 /* ── Scroll indicator ── */

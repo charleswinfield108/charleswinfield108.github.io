@@ -130,6 +130,12 @@
   background: rgba(34, 177, 196, 0.06);
 }
 
+.contact-page__social-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
 /* Form panel */
 .contact-page__form-wrap {
   background: rgba(255, 255, 255, 0.03);

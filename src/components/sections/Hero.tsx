@@ -1,5 +1,17 @@
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { BIO } from '../../lib/data'
 import './Hero.css'
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.6, delay, ease: 'easeOut' as const } },
+})
+
+const fadeRight = {
+  initial: { opacity: 0, x: 40 },
+  animate: { opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.3, ease: 'easeOut' as const } },
+}
 
 export default function Hero() {
   return (
@@ -9,29 +21,30 @@ export default function Hero() {
 
           {/* Left — heading + CTA */}
           <div className="hero__content">
-            <h1 className="hero__name">
+            <motion.h1 className="hero__name" {...fadeUp(0)}>
               <span className="hero__wave">👋</span>
               <span className="hero__name-hello">Hi, I'm</span>
               <span className="hero__name-main">Charles</span>
-            </h1>
+            </motion.h1>
 
-            <p className="hero__tagline">
+            <motion.p className="hero__tagline" {...fadeUp(0.15)}>
               I Create Scalable Digital Products With{' '}
               <span className="hero__tagline-accent">AI, Experience, And Skill.</span>
-            </p>
+            </motion.p>
 
-            <p className="hero__bio">{BIO.intro}</p>
+            <motion.p className="hero__bio" {...fadeUp(0.25)}>{BIO.intro}</motion.p>
 
-            <div className="hero__ctas">
-              <a href="#contact" className="btn btn-outline hero__btn-contact">Get In Contact</a>
-              <a href="#works" className="btn btn-primary">View My Work</a>
-            </div>
+            <motion.div className="hero__ctas" {...fadeUp(0.35)}>
+              <Link to="/contact" className="btn btn-outline hero__btn-contact">Get In Contact</Link>
+              <Link to="/portfolio" className="btn btn-primary">View My Work</Link>
+            </motion.div>
           </div>
 
-          {/* Right — profile card + bio */}
-          <div className="hero__right">
+          {/* Right — profile card */}
+          <motion.div className="hero__right" {...fadeRight}>
             <div className="hero__profile-card">
               <div className="hero__profile-img-wrap">
+                {/* AI-generated portrait — created with ChatGPT (DALL·E) */}
                 <img
                   src="/assets/images/cw-hero-ai.png"
                   alt="Charles Winfield"
@@ -40,25 +53,25 @@ export default function Hero() {
               </div>
 
               <div className="hero__profile-body">
-                <div className="hero__badge">
-                  <span className="hero__badge-dot" />
-                  Available for Work
+                <div className="hero__profile-body-row">
+                  <div className="hero__badge">
+                    <span className="hero__badge-dot" />
+                    Full Stack MERN Developer
+                  </div>
+                  <div className="hero__badge">
+                    <span className="hero__badge-dot" />
+                    Available for Work
+                  </div>
                 </div>
 
-                <div className="hero__stats-row">
-                  <div className="hero__stats-item">
-                    <span className="hero__stats-number">15+</span>
-                    <span className="hero__stats-label">Projects</span>
-                  </div>
-                  <div className="hero__stats-divider" />
-                  <div className="hero__stats-item">
-                    <span className="hero__stats-number">13+</span>
-                    <span className="hero__stats-label">Technologies</span>
-                  </div>
+                <div className="hero__tech-row">
+                  {['MongoDB', 'Express.JS', 'React', 'Node.JS', 'AI Developer'].map(t => (
+                    <span key={t} className="hero__tech-pill">{t}</span>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Mail, MapPin } from 'lucide-react'
 import { useReveal } from '../hooks/useReveal'
 import ContactForm from '../components/ui/ContactForm'
+import FooterCTA from '../components/sections/FooterCTA'
 import './Contact.css'
 
 export default function Contact() {
@@ -55,6 +56,7 @@ export default function Contact() {
                 className="contact-page__social-btn"
                 aria-label="LinkedIn"
               >
+                <img src="/assets/icons/linkedin.svg" alt="" aria-hidden="true" className="contact-page__social-icon" />
                 LinkedIn
               </a>
               <a
@@ -64,6 +66,7 @@ export default function Contact() {
                 className="contact-page__social-btn"
                 aria-label="GitHub"
               >
+                <img src="/assets/icons/github-sm.svg" alt="" aria-hidden="true" className="contact-page__social-icon" />
                 GitHub
               </a>
             </div>
@@ -78,6 +81,7 @@ export default function Contact() {
 
         </div>
       </div>
+      <FooterCTA showBanner={false} />
     </main>
   )
 }

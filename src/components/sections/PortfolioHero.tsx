@@ -23,7 +23,7 @@ export default function PortfolioHero() {
               Full-Stack MERN Developer &middot; U.S. Army Veteran &middot; 30+ Projects Built
             </p>
             <a
-              href="/assets/charles-winfield-cv.pdf"
+              href="/assets/images/CW Resume.pdf"
               download
               className="btn btn-primary"
             >
