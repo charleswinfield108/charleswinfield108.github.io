@@ -31,6 +31,7 @@
 .header__logo {
   height: 38px;
   width: auto;
+  color: var(--white);
 }
 
 .header__title {
@@ -135,9 +136,9 @@
   box-shadow: 0 0 20px rgba(34, 177, 196, 0.25);
 }
 
-/* Light mode — invert white logo to dark */
+/* Light mode — dark logo */
 [data-theme="light"] .header__logo {
-  filter: invert(1);
+  color: var(--navy-dark);
 }
 
 /* Mobile bottom tab bar — hidden on desktop */
