@@ -29,7 +29,7 @@
 .login-page__logo img {
   height: 60px;
   width: auto;
-  filter: invert(1);
+  filter: brightness(0) invert(1);
 }
 
 [data-theme="light"] .login-page__logo img {
