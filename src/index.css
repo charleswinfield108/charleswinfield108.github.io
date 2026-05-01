@@ -234,7 +234,7 @@
 }
 
 [data-theme="light"] .footer-cta__logo {
-  filter: invert(1);
+  filter: none;
 }
 
 [data-theme="light"] .contact-page__social-btn[aria-label="GitHub"] .contact-page__social-icon {
