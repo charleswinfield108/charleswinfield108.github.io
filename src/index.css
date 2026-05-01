@@ -205,9 +205,12 @@
   border-color: rgba(34, 177, 196, 0.15);
 }
 
-/* Light mode gradient text overrides — bluish-white instead of teal-yellow */
+/* Light mode gradient text overrides — dark blue to teal */
 [data-theme="light"] .hero__name-main {
-  background: linear-gradient(135deg, #7CB5C8 0%, #FFFFFF 100%);
+  background: linear-gradient(135deg, #1E5A7A 0%, #00A8A8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 [data-theme="light"] .p-hero__title-accent {
