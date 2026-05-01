@@ -31,7 +31,7 @@
 .header__logo {
   height: 38px;
   width: auto;
-  color: var(--white);
+  filter: invert(1);
 }
 
 .header__title {
@@ -136,9 +136,9 @@
   box-shadow: 0 0 20px rgba(34, 177, 196, 0.25);
 }
 
-/* Light mode — dark logo */
+/* Light mode — show navy logo as-is */
 [data-theme="light"] .header__logo {
-  color: var(--navy-dark);
+  filter: none;
 }
 
 /* Mobile bottom tab bar — hidden on desktop */
