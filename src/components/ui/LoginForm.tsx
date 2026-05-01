@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../../lib/supabaseClient'
 import { InputField } from './FormField'
 import FeedbackBanner from './FeedbackBanner'
@@ -6,31 +7,19 @@ import './FormField.css'
 import './FeedbackBanner.css'
 import './LoginForm.css'
 
-interface LoginFormState {
-  email: string
-  password: string
-}
-
-interface LoginFormErrors {
-  email?: string
-  password?: string
-}
-
+interface LoginFormState { email: string; password: string }
+interface LoginFormErrors { email?: string; password?: string }
 type SubmitStatus = 'idle' | 'loading' | 'error'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
 const INITIAL: LoginFormState = { email: '', password: '' }
 
-interface LoginFormProps {
-  onSuccess: () => void
-}
-
-export default function LoginForm({ onSuccess }: LoginFormProps) {
+export default function LoginForm({ onSuccess }: { onSuccess: () => void }) {
+  const { t } = useTranslation()
   const [form, setForm] = useState<LoginFormState>(INITIAL)
   const [errors, setErrors] = useState<LoginFormErrors>({})
   const [status, setStatus] = useState<SubmitStatus>('idle')
-  const [authError, setAuthError] = useState<string>('')
+  const [authError, setAuthError] = useState('')
 
   const emailRef = useRef<HTMLDivElement>(null)
   const passwordRef = useRef<HTMLDivElement>(null)
@@ -38,20 +27,18 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
   function validate(): LoginFormErrors {
     const errs: LoginFormErrors = {}
     if (!form.email.trim()) {
-      errs.email = 'Email is required'
+      errs.email = t('login.error_email_required')
     } else if (!EMAIL_REGEX.test(form.email.trim())) {
-      errs.email = 'Please enter a valid email address'
+      errs.email = t('login.error_email_format')
     }
-    if (!form.password) errs.password = 'Password is required'
+    if (!form.password) errs.password = t('login.error_password_required')
     return errs
   }
 
   function handleChange(field: keyof LoginFormState) {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
       setForm(prev => ({ ...prev, [field]: e.target.value }))
-      if (errors[field]) {
-        setErrors(prev => ({ ...prev, [field]: undefined }))
-      }
+      if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }))
       if (authError) setAuthError('')
     }
   }
@@ -76,37 +63,29 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
     if (error) {
       setStatus('error')
-      setAuthError('Invalid login credentials')
+      setAuthError(t('login.auth_error'))
     } else if (data.session) {
       setStatus('idle')
       setForm(INITIAL)
       onSuccess()
     } else {
       setStatus('error')
-      setAuthError('Login failed. Please try again.')
+      setAuthError(t('login.auth_fail'))
     }
   }
 
-  const buttonLabel =
-    status === 'loading' ? 'Signing In…' : 'Sign In'
-
   return (
     <form className="login-form" onSubmit={handleSubmit} noValidate>
-      {authError && (
-        <FeedbackBanner
-          type="error"
-          message={authError}
-        />
-      )}
+      {authError && <FeedbackBanner type="error" message={authError} />}
 
       <div ref={emailRef as React.RefObject<HTMLDivElement>}>
         <InputField
           id="email"
-          label="Email Address"
+          label={t('login.email_label')}
           type="email"
           value={form.email}
           onChange={handleChange('email')}
-          placeholder="admin@example.com"
+          placeholder={t('login.email_placeholder')}
           error={errors.email}
         />
       </div>
@@ -114,11 +93,11 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
       <div ref={passwordRef as React.RefObject<HTMLDivElement>}>
         <InputField
           id="password"
-          label="Password"
+          label={t('login.password_label')}
           type="password"
           value={form.password}
           onChange={handleChange('password')}
-          placeholder="••••••••"
+          placeholder={t('login.password_placeholder')}
           error={errors.password}
         />
       </div>
@@ -128,7 +107,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         className="btn btn-primary login-form__submit"
         disabled={status === 'loading'}
       >
-        {buttonLabel}
+        {status === 'loading' ? t('login.submitting') : t('login.submit')}
       </button>
     </form>
   )

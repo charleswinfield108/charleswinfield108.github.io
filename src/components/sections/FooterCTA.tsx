@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { SOCIAL_LINKS } from '../../lib/data'
 import './FooterCTA.css'
 
@@ -11,6 +12,7 @@ const inView = (delay = 0) => ({
 })
 
 export default function FooterCTA({ showBanner = true }: { showBanner?: boolean }) {
+  const { t } = useTranslation()
   const year = new Date().getFullYear()
 
   return (
@@ -24,19 +26,17 @@ export default function FooterCTA({ showBanner = true }: { showBanner?: boolean 
             whileHover={{ y: -6 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           >
-            <h2 className="footer-cta__banner-title">Let's Build a Project!</h2>
-            <p className="footer-cta__banner-sub">
-              Interested in working together? Reach out today and let's build something great. I'll bring the code.
-            </p>
+            <h2 className="footer-cta__banner-title">{t('footer.cta_title')}</h2>
+            <p className="footer-cta__banner-sub">{t('footer.cta_sub')}</p>
             <Link to="/contact" className="btn btn-primary">
-              Get Started
+              {t('footer.cta_btn')}
             </Link>
           </motion.div>
         )}
 
         <motion.div className="footer-cta__bottom" {...inView(0.15)}>
           <img src="/assets/logo/cw-logo.svg" alt="Charles Winfield" className="footer-cta__logo" />
-          <p className="footer-cta__tagline">Building scalable digital products, one line at a time.</p>
+          <p className="footer-cta__tagline">{t('footer.tagline')}</p>
           <a href="mailto:charleswinfield108@gmail.com" className="footer-cta__email">
             <Mail size={14} />
             charleswinfield108@gmail.com
@@ -49,7 +49,7 @@ export default function FooterCTA({ showBanner = true }: { showBanner?: boolean 
               </a>
             ))}
           </div>
-          <p className="footer-cta__copy">© {year} Charles Winfield. All rights reserved.</p>
+          <p className="footer-cta__copy">{t('footer.copyright', { year })}</p>
         </motion.div>
 
       </div>

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView, animate } from 'framer-motion'
 import { Compass, PenTool, Code2, Rocket } from 'lucide-react'
-import { BIO } from '../../lib/data'
+import { useTranslation } from 'react-i18next'
 import './About.css'
 
 const inView = (delay = 0) => ({
@@ -28,43 +28,22 @@ function CountUp({ to, suffix = '' }: { to: number; suffix?: string }) {
   return <span ref={ref}>{val}{suffix}</span>
 }
 
-const STATS = [
-  { to: 5,   suffix: '+', label: 'Years Experience'   },
-  { to: 15,  suffix: '+', label: 'Projects Built'    },
-  { to: 13,  suffix: '+', label: 'Technologies'      },
-  { to: 100, suffix: '%', label: 'Passion Driven'    },
-]
-
-const PROCESS = [
-  {
-    icon: Compass,
-    number: '01',
-    title: 'Discovery & Strategy',
-    desc: 'Establishing the "Why" and "What." I identify the problem, study the landscape, document requirements, define the MVP, and select the right tech stack for the job.',
-  },
-  {
-    icon: PenTool,
-    number: '02',
-    title: 'Architecture & Design',
-    desc: 'Creating the blueprint. I design UI/UX wireframes alongside the backend schema and API contracts — planning exactly how data flows from a user\'s click to the database.',
-  },
-  {
-    icon: Code2,
-    number: '03',
-    title: 'Implementation',
-    desc: 'The heavy lifting. I build the responsive frontend, set up server logic and database integration, then connect the two via APIs to deliver a cohesive, functional application.',
-  },
-  {
-    icon: Rocket,
-    number: '04',
-    title: 'QA & Launch',
-    desc: 'Ensuring stability and going live. Unit tests, integration tests, and bug fixes confirm the build is production-ready before deploying to AWS, Vercel, or Heroku.',
-  },
-]
+const PROCESS_ICONS = [Compass, PenTool, Code2, Rocket]
 
 export default function About() {
+  const { t } = useTranslation()
   const lineRef = useRef<HTMLDivElement>(null)
   const lineInView = useInView(lineRef, { once: true })
+
+  const stats = [
+    { to: 5,   suffix: '+', labelKey: 'about.stat_years'    },
+    { to: 15,  suffix: '+', labelKey: 'about.stat_projects' },
+    { to: 13,  suffix: '+', labelKey: 'about.stat_tech'     },
+    { to: 100, suffix: '%', labelKey: 'about.stat_passion'  },
+  ]
+
+  const bioParagraphs = t('about.bio', { returnObjects: true }) as string[]
+  const process = t('about.process', { returnObjects: true }) as Array<{ number: string; title: string; desc: string }>
 
   return (
     <section className="about section section-alt" id="about">
@@ -72,8 +51,8 @@ export default function About() {
 
         {/* Header */}
         <motion.div className="about__header" {...inView(0)}>
-          <span className="section-label">Who I Am</span>
-          <h2 className="about__title">About <span>Charles</span></h2>
+          <span className="section-label">{t('about.section_label')}</span>
+          <h2 className="about__title">{t('about.title')} <span>{t('about.title_name')}</span></h2>
         </motion.div>
 
         {/* Bio row */}
@@ -93,17 +72,17 @@ export default function About() {
 
           <motion.div className="about__bio-content" {...inView(0.2)}>
             <div className="about__text">
-              {BIO.about.map((para, i) => (
+              {bioParagraphs.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
             <div className="about__stats">
-              {STATS.map((stat, i) => (
-                <motion.div key={stat.label} className="about__stat" {...inView(0.25 + i * 0.07)}>
+              {stats.map((stat, i) => (
+                <motion.div key={stat.labelKey} className="about__stat" {...inView(0.25 + i * 0.07)}>
                   <div className="about__stat-number">
                     <CountUp to={stat.to} suffix={stat.suffix} />
                   </div>
-                  <div className="about__stat-label">{stat.label}</div>
+                  <div className="about__stat-label">{t(stat.labelKey)}</div>
                 </motion.div>
               ))}
             </div>
@@ -112,8 +91,8 @@ export default function About() {
 
         {/* Process */}
         <motion.div className="about__process-header" {...inView(0.1)}>
-          <span className="section-label">How I Work</span>
-          <h3 className="about__process-title">My Development Process</h3>
+          <span className="section-label">{t('about.process_label')}</span>
+          <h3 className="about__process-title">{t('about.process_title')}</h3>
         </motion.div>
 
         <svg width="0" height="0" style={{ position: 'absolute' }}>
@@ -127,8 +106,8 @@ export default function About() {
 
         <div className="about__process-grid" ref={lineRef}>
           <div className={`about__process-line${lineInView ? ' animate' : ''}`} />
-          {PROCESS.map((step, i) => {
-            const Icon = step.icon
+          {process.map((step, i) => {
+            const Icon = PROCESS_ICONS[i]
             return (
               <motion.div
                 key={step.number}

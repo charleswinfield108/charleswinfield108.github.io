@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import { EDUCATION } from '../../lib/data'
 import { useReveal } from '../../hooks/useReveal'
 import './PortfolioEducation.css'
 
 export default function PortfolioEducation() {
+  const { t } = useTranslation()
   const { ref: headerRef, visible: headerVisible } = useReveal()
   const { ref: timelineRef, visible: timelineVisible } = useReveal()
 
@@ -14,14 +16,11 @@ export default function PortfolioEducation() {
           className={`p-education__header reveal ${headerVisible ? 'visible' : ''}`}
           ref={headerRef as React.RefObject<HTMLDivElement>}
         >
-          <span className="section-label">Where I Learned</span>
-          <h2 className="p-section-title">Education</h2>
+          <span className="section-label">{t('education.label')}</span>
+          <h2 className="p-section-title">{t('education.title')}</h2>
         </div>
 
-        <div
-          className="p-timeline"
-          ref={timelineRef as React.RefObject<HTMLDivElement>}
-        >
+        <div className="p-timeline" ref={timelineRef as React.RefObject<HTMLDivElement>}>
           {EDUCATION.map((entry, i) => (
             <div
               key={entry.id}

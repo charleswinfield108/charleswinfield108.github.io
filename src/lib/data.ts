@@ -141,6 +141,15 @@ export const EDUCATION: EducationEntry[] = [
     description:
       'Studied Interactive Multimedia, gaining foundational skills in digital design, web development, and user interface principles that continue to inform my approach to front-end development.',
   },
+  {
+    id: 'spc',
+    institution: 'St. Petersburg College',
+    program: 'Web Development',
+    startDate: 'Jan 2009',
+    endDate: 'Sep 2012',
+    description:
+      'Completed formal web development studies covering foundational programming, web design, and digital media — establishing the technical groundwork that has driven my career in software development.',
+  },
 ]
 
 export const WORK_EXPERIENCE: WorkEntry[] = [

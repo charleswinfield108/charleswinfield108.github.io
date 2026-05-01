@@ -1,15 +1,20 @@
 import { NavLink } from 'react-router-dom'
 import { Download, House, FolderOpen, Link2, Mail } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import './Header.css'
 
-const NAV_LINKS = [
-  { label: 'Home',      to: '/',          icon: House      },
-  { label: 'Portfolio', to: '/portfolio', icon: FolderOpen },
-  { label: 'Links',     to: '/links',     icon: Link2      },
-  { label: 'Contact',   to: '/contact',   icon: Mail       },
-]
+const NAV_ICONS = [House, FolderOpen, Link2, Mail]
 
 export default function Header() {
+  const { t } = useTranslation()
+
+  const navLinks = [
+    { key: 'nav.home',      to: '/'          },
+    { key: 'nav.portfolio', to: '/portfolio' },
+    { key: 'nav.links',     to: '/links'     },
+    { key: 'nav.contact',   to: '/contact'   },
+  ]
+
   return (
     <>
       <header className="header">
@@ -30,13 +35,13 @@ export default function Header() {
             <div className="header__spacer" />
 
             <nav className="header__nav">
-              {NAV_LINKS.map(link => (
+              {navLinks.map(link => (
                 <NavLink
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) => isActive ? 'active' : ''}
                 >
-                  {link.label}
+                  {t(link.key)}
                   <span className="header__nav-dot" />
                 </NavLink>
               ))}
@@ -48,7 +53,7 @@ export default function Header() {
                 download
                 className="btn btn-outline header__hire"
               >
-                Resume
+                {t('nav.resume')}
                 <Download size={14} />
               </a>
             </div>
@@ -58,8 +63,8 @@ export default function Header() {
 
       {/* Mobile bottom tab bar */}
       <nav className="mobile-nav" aria-label="Mobile navigation">
-        {NAV_LINKS.map(link => {
-          const Icon = link.icon
+        {navLinks.map((link, i) => {
+          const Icon = NAV_ICONS[i]
           return (
             <NavLink
               key={link.to}
@@ -67,7 +72,7 @@ export default function Header() {
               className={({ isActive }) => `mobile-nav__item${isActive ? ' active' : ''}`}
             >
               <Icon size={22} />
-              <span>{link.label}</span>
+              <span>{t(link.key)}</span>
             </NavLink>
           )
         })}

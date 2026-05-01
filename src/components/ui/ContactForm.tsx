@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { Send } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../../lib/supabaseClient'
 import { InputField, TextareaField } from './FormField'
 import FeedbackBanner from './FeedbackBanner'
@@ -22,10 +23,10 @@ interface FormErrors {
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
 const INITIAL: FormState = { name: '', email: '', message: '' }
 
 export default function ContactForm() {
+  const { t } = useTranslation()
   const [form, setForm] = useState<FormState>(INITIAL)
   const [errors, setErrors] = useState<FormErrors>({})
   const [status, setStatus] = useState<SubmitStatus>('idle')
@@ -36,22 +37,20 @@ export default function ContactForm() {
 
   function validate(): FormErrors {
     const errs: FormErrors = {}
-    if (!form.name.trim()) errs.name = 'Name is required'
+    if (!form.name.trim()) errs.name = t('form.error_name')
     if (!form.email.trim()) {
-      errs.email = 'Email is required'
+      errs.email = t('form.error_email_required')
     } else if (!EMAIL_REGEX.test(form.email.trim())) {
-      errs.email = 'Please enter a valid email address'
+      errs.email = t('form.error_email_format')
     }
-    if (!form.message.trim()) errs.message = 'Message is required'
+    if (!form.message.trim()) errs.message = t('form.error_message')
     return errs
   }
 
   function handleChange(field: keyof FormState) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setForm(prev => ({ ...prev, [field]: e.target.value }))
-      if (errors[field]) {
-        setErrors(prev => ({ ...prev, [field]: undefined }))
-      }
+      if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }))
       if (status === 'success') setStatus('idle')
     }
   }
@@ -86,32 +85,22 @@ export default function ContactForm() {
   }
 
   const buttonLabel =
-    status === 'loading' ? 'Sending…' :
-    status === 'error'   ? 'Try Again' :
-    'Send Message'
+    status === 'loading' ? t('form.submitting') :
+    status === 'error'   ? t('form.retry') :
+    t('form.submit')
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
-      {status === 'success' && (
-        <FeedbackBanner
-          type="success"
-          message="Message sent! I'll get back to you soon."
-        />
-      )}
-      {status === 'error' && (
-        <FeedbackBanner
-          type="error"
-          message="Something went wrong. Please try again."
-        />
-      )}
+      {status === 'success' && <FeedbackBanner type="success" message={t('form.success')} />}
+      {status === 'error'   && <FeedbackBanner type="error"   message={t('form.error')}   />}
 
       <div ref={nameRef as React.RefObject<HTMLDivElement>}>
         <InputField
           id="name"
-          label="Name"
+          label={t('form.name_label')}
           value={form.name}
           onChange={handleChange('name')}
-          placeholder="Your name"
+          placeholder={t('form.name_placeholder')}
           error={errors.name}
         />
       </div>
@@ -119,11 +108,11 @@ export default function ContactForm() {
       <div ref={emailRef as React.RefObject<HTMLDivElement>}>
         <InputField
           id="email"
-          label="Email"
+          label={t('form.email_label')}
           type="email"
           value={form.email}
           onChange={handleChange('email')}
-          placeholder="your@email.com"
+          placeholder={t('form.email_placeholder')}
           error={errors.email}
         />
       </div>
@@ -131,10 +120,10 @@ export default function ContactForm() {
       <div ref={messageRef as React.RefObject<HTMLDivElement>}>
         <TextareaField
           id="message"
-          label="Message"
+          label={t('form.message_label')}
           value={form.message}
           onChange={handleChange('message')}
-          placeholder="Tell me about your project…"
+          placeholder={t('form.message_placeholder')}
           error={errors.message}
           rows={6}
         />

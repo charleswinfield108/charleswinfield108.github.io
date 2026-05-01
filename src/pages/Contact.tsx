@@ -1,10 +1,12 @@
 import { Mail, MapPin } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useReveal } from '../hooks/useReveal'
 import ContactForm from '../components/ui/ContactForm'
 import FooterCTA from '../components/sections/FooterCTA'
 import './Contact.css'
 
 export default function Contact() {
+  const { t } = useTranslation()
   const { ref: infoRef, visible: infoVisible } = useReveal()
   const { ref: formRef, visible: formVisible } = useReveal()
 
@@ -13,14 +15,11 @@ export default function Contact() {
       <div className="container">
 
         <div className="contact-page__heading">
-
-          <span className="section-label">Get In Touch</span>
+          <span className="section-label">{t('contact.label')}</span>
           <h1>
-            Let's <span className="contact-page__gradient">Work Together</span>
+            {t('contact.heading')} <span className="contact-page__gradient">{t('contact.heading_accent')}</span>
           </h1>
-          <p className="contact-page__sub">
-            Have a project in mind, a question, or just want to say hello? Send me a message and I'll get back to you.
-          </p>
+          <p className="contact-page__sub">{t('contact.subtitle')}</p>
         </div>
 
         <div className="contact-page__body">
@@ -29,45 +28,45 @@ export default function Contact() {
             ref={infoRef as React.RefObject<HTMLElement>}
             className={`contact-page__info reveal reveal-left ${infoVisible ? 'visible' : ''}`}
           >
-            <h2>Contact Info</h2>
+            <h2>{t('contact.info_heading')}</h2>
 
             <ul className="contact-page__info-list">
               <li>
                 <span className="contact-page__info-icon"><Mail size={18} /></span>
                 <div>
-                  <span className="contact-page__info-label">Email</span>
+                  <span className="contact-page__info-label">{t('contact.email_label')}</span>
                   <a href="mailto:charleswinfield108@gmail.com">charleswinfield108@gmail.com</a>
                 </div>
               </li>
               <li>
                 <span className="contact-page__info-icon"><MapPin size={18} /></span>
                 <div>
-                  <span className="contact-page__info-label">Location</span>
-                  <span>Available Remotely</span>
+                  <span className="contact-page__info-label">{t('contact.location_label')}</span>
+                  <span>{t('contact.location_value')}</span>
                 </div>
               </li>
             </ul>
 
             <div className="contact-page__socials">
               <a
-                href="https://www.linkedin.com/in/charles-winfield"
+                href="https://www.linkedin.com/in/charles-winfield-full-stack/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact-page__social-btn"
                 aria-label="LinkedIn"
               >
                 <img src="/assets/icons/linkedin.svg" alt="" aria-hidden="true" className="contact-page__social-icon" />
-                LinkedIn
+                {t('contact.linkedin')}
               </a>
               <a
-                href="https://github.com/charleswinfield"
+                href="https://github.com/charleswinfield108"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact-page__social-btn"
                 aria-label="GitHub"
               >
                 <img src="/assets/icons/github-sm.svg" alt="" aria-hidden="true" className="contact-page__social-icon" />
-                GitHub
+                {t('contact.github')}
               </a>
             </div>
           </aside>

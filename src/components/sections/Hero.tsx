@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { BIO } from '../../lib/data'
+import { useTranslation } from 'react-i18next'
 import './Hero.css'
 
 const fadeUp = (delay = 0) => ({
@@ -13,7 +13,11 @@ const fadeRight = {
   animate: { opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.3, ease: 'easeOut' as const } },
 }
 
+const TECH_PILLS = ['MongoDB', 'Express.JS', 'React', 'Node.JS', 'AI Developer']
+
 export default function Hero() {
+  const { t } = useTranslation()
+
   return (
     <section className="hero" id="home">
       <div className="container">
@@ -23,20 +27,20 @@ export default function Hero() {
           <div className="hero__content">
             <motion.h1 className="hero__name" {...fadeUp(0)}>
               <span className="hero__wave">👋</span>
-              <span className="hero__name-hello">Hi, I'm</span>
+              <span className="hero__name-hello">{t('hero.greeting')}</span>
               <span className="hero__name-main">Charles</span>
             </motion.h1>
 
             <motion.p className="hero__tagline" {...fadeUp(0.15)}>
-              I Create Scalable Digital Products With{' '}
-              <span className="hero__tagline-accent">AI, Experience, And Skill.</span>
+              {t('hero.tagline')}{' '}
+              <span className="hero__tagline-accent">{t('hero.tagline_accent')}</span>
             </motion.p>
 
-            <motion.p className="hero__bio" {...fadeUp(0.25)}>{BIO.intro}</motion.p>
+            <motion.p className="hero__bio" {...fadeUp(0.25)}>{t('hero.bio')}</motion.p>
 
             <motion.div className="hero__ctas" {...fadeUp(0.35)}>
-              <Link to="/contact" className="btn btn-outline hero__btn-contact">Get In Contact</Link>
-              <Link to="/portfolio" className="btn btn-primary">View My Work</Link>
+              <Link to="/contact" className="btn btn-outline hero__btn-contact">{t('hero.cta_contact')}</Link>
+              <Link to="/portfolio" className="btn btn-primary">{t('hero.cta_work')}</Link>
             </motion.div>
           </div>
 
@@ -56,17 +60,17 @@ export default function Hero() {
                 <div className="hero__profile-body-row">
                   <div className="hero__badge">
                     <span className="hero__badge-dot" />
-                    Full Stack MERN Developer
+                    {t('hero.badge_role')}
                   </div>
                   <div className="hero__badge">
                     <span className="hero__badge-dot" />
-                    Available for Work
+                    {t('hero.badge_available')}
                   </div>
                 </div>
 
                 <div className="hero__tech-row">
-                  {['MongoDB', 'Express.JS', 'React', 'Node.JS', 'AI Developer'].map(t => (
-                    <span key={t} className="hero__tech-pill">{t}</span>
+                  {TECH_PILLS.map(pill => (
+                    <span key={pill} className="hero__tech-pill">{pill}</span>
                   ))}
                 </div>
               </div>

@@ -4,7 +4,7 @@
   z-index: -1;
   pointer-events: none;
   background-color: var(--bg);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 

@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(11, 17, 32, 0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
 }
 
@@ -38,7 +38,7 @@
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--white);
+  color: var(--text-h);
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@
 
 .header__title-role {
   font-weight: 800;
-  color: var(--white);
+  color: var(--text-h);
 }
 
 
@@ -72,11 +72,11 @@
 }
 
 .header__nav a:hover {
-  color: var(--white);
+  color: var(--text-h);
 }
 
 .header__nav a.active {
-  color: var(--white);
+  color: var(--text-h);
 }
 
 .header__nav-dot {
@@ -135,6 +135,11 @@
   box-shadow: 0 0 20px rgba(34, 177, 196, 0.25);
 }
 
+/* Light mode — invert white logo to dark */
+[data-theme="light"] .header__logo {
+  filter: invert(1);
+}
+
 /* Mobile bottom tab bar — hidden on desktop */
 .mobile-nav {
   display: none;
@@ -165,7 +170,7 @@
     left: 0;
     right: 0;
     z-index: 200;
-    background: rgba(11, 17, 32, 0.96);
+    background: var(--nav-bg);
     backdrop-filter: blur(16px);
     border-top: 1px solid var(--border);
     padding-bottom: env(safe-area-inset-bottom);
