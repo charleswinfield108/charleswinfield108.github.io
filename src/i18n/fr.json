@@ -1,0 +1,183 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "portfolio": "Portfolio",
+    "links": "Liens",
+    "contact": "Contact",
+    "resume": "CV"
+  },
+  "hero": {
+    "greeting": "Bonjour, je suis",
+    "tagline": "Je Crée des Produits Numériques Évolutifs Avec",
+    "tagline_accent": "l'IA, l'Expérience et le Savoir-Faire.",
+    "bio": "Développeur Full-Stack MERN basé à Columbus, Ohio — créant des applications réelles avec JavaScript, React, Node.js, Express et MongoDB, avec une expérience en travail freelance, design multimédia et service militaire.",
+    "cta_contact": "Me Contacter",
+    "cta_work": "Voir Mon Travail",
+    "badge_role": "Développeur Full Stack MERN",
+    "badge_available": "Disponible à l'emploi"
+  },
+  "about": {
+    "section_label": "Qui Je Suis",
+    "title": "À propos de",
+    "title_name": "Charles",
+    "bio": [
+      "Développeur Full-Stack MERN basé à Columbus, Ohio avec plus de 30 projets réalisés et une expérience en travail freelance, design multimédia et service militaire. Je crée des applications réelles avec JavaScript, React, Node.js, Express et MongoDB — avec un accent fort sur le développement d'API, la conception de bases de données et l'architecture web moderne.",
+      "Je tire parti des outils de développement assistés par l'IA pour livrer du code propre et maintenable plus rapidement, et j'apporte une communication, un professionnalisme et une fiabilité exceptionnels à chaque équipe que je rejoins. Ma formation couvre des études formelles en développement web au St. Petersburg College et une formation en multimédia interactif à Columbus State."
+    ],
+    "stat_years": "Ans d'Expérience",
+    "stat_projects": "Projets Réalisés",
+    "stat_tech": "Technologies",
+    "stat_passion": "Passion Totale",
+    "process_label": "Ma Méthode",
+    "process_title": "Mon Processus de Développement",
+    "process": [
+      {
+        "number": "01",
+        "title": "Découverte & Stratégie",
+        "desc": "Établir le « Pourquoi » et le « Quoi ». J'identifie le problème, étudie le paysage, documente les exigences, définis le MVP et sélectionne la stack technologique adaptée."
+      },
+      {
+        "number": "02",
+        "title": "Architecture & Design",
+        "desc": "Créer le plan directeur. Je conçois les wireframes UI/UX en parallèle avec le schéma backend et les contrats d'API — en planifiant exactement le flux de données du clic utilisateur à la base de données."
+      },
+      {
+        "number": "03",
+        "title": "Implémentation",
+        "desc": "Le travail intensif. Je construis le frontend responsive, configure la logique serveur et l'intégration de base de données, puis les connecte via des API pour livrer une application cohérente et fonctionnelle."
+      },
+      {
+        "number": "04",
+        "title": "QA & Lancement",
+        "desc": "Assurer la stabilité et mettre en ligne. Les tests unitaires, les tests d'intégration et les corrections de bugs confirment que la build est prête pour la production avant le déploiement."
+      }
+    ]
+  },
+  "skills": {
+    "tech_label": "Ce Que Je Sais",
+    "tech_title": "Compétences Techniques",
+    "stack_label": "Mes Outils",
+    "stack_title": "Stack Technologique",
+    "soft_label": "Ma Méthode",
+    "soft_title": "Compétences Interpersonnelles",
+    "progress": [
+      {
+        "name": "Développement Frontend",
+        "desc": "Créer des interfaces responsives et pixel-perfect avec React, TypeScript et CSS moderne. Je traduis les designs en expériences utilisateur rapides et accessibles avec des micro-interactions fluides."
+      },
+      {
+        "name": "Développement Backend",
+        "desc": "Concevoir et construire des API RESTful et la logique côté serveur avec Node.js et Express. Des systèmes d'authentification aux pipelines de données, j'architecture des solutions fiables et évolutives."
+      },
+      {
+        "name": "Bases de Données & API",
+        "desc": "Modéliser des schémas relationnels et documentaires avec MySQL, PostgreSQL, MongoDB et Supabase. Je conçois des API intuitives, versionnées et optimisées dès le premier jour."
+      },
+      {
+        "name": "Design UI / UX",
+        "desc": "Traduire les besoins utilisateurs en wireframes et interfaces soignées. J'aborde chaque décision de design avec l'utilisabilité, la hiérarchie visuelle et la cohérence de marque en tête."
+      }
+    ],
+    "soft": [
+      {
+        "name": "Résolution de Problèmes",
+        "desc": "J'aborde chaque défi méthodiquement — en décomposant des exigences complexes en étapes testables et incrémentales qui respectent les délais."
+      },
+      {
+        "name": "Communication",
+        "desc": "Je communique clairement avec les membres techniques et les parties prenantes non techniques, maintenant tout le monde aligné et informé."
+      },
+      {
+        "name": "Adaptabilité",
+        "desc": "À l'aise pour passer entre langages, frameworks et domaines — je m'épanouis dans des environnements en mouvement rapide."
+      }
+    ]
+  },
+  "works": {
+    "label": "Mon Portfolio",
+    "title": "Travaux Sélectionnés",
+    "view_portfolio": "Voir Mon Portfolio →",
+    "view_full": "Voir le Projet Complet →"
+  },
+  "portfolio_hero": {
+    "label": "Mon Portfolio",
+    "title": "Expérience &",
+    "title_accent": "Projets.",
+    "subtitle": "Développeur Full-Stack MERN · Vétéran de l'Armée · 30+ Projets Réalisés",
+    "download": "Télécharger le CV",
+    "badge_available": "Disponible à l'emploi",
+    "stat_projects": "Projets Réalisés",
+    "stat_modules": "Modules Complétés",
+    "stat_years": "Ans d'Exp."
+  },
+  "education": {
+    "label": "Où J'ai Appris",
+    "title": "Formation"
+  },
+  "experience": {
+    "label": "Où J'ai Travaillé",
+    "title": "Expérience Professionnelle"
+  },
+  "projects": {
+    "label": "Ce Que J'ai Construit",
+    "title": "Projets",
+    "view_github": "Voir sur GitHub →"
+  },
+  "links": {
+    "label": "Outils du Métier",
+    "title": "Liens &",
+    "title_accent": "Ressources",
+    "subtitle": "Les ressources, références et outils sur lesquels je m'appuie chaque jour en tant que développeur."
+  },
+  "contact": {
+    "label": "Me Contacter",
+    "heading": "Travaillons",
+    "heading_accent": "Ensemble",
+    "subtitle": "Vous avez un projet en tête, une question ou vous voulez juste dire bonjour ? Envoyez-moi un message et je vous répondrai.",
+    "info_heading": "Coordonnées",
+    "email_label": "Courriel",
+    "location_label": "Localisation",
+    "location_value": "Disponible à distance",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "form": {
+    "name_label": "Nom",
+    "name_placeholder": "Votre nom",
+    "email_label": "Courriel",
+    "email_placeholder": "votre@email.com",
+    "message_label": "Message",
+    "message_placeholder": "Parlez-moi de votre projet…",
+    "submit": "Envoyer le Message",
+    "submitting": "Envoi en cours…",
+    "retry": "Réessayer",
+    "success": "Message envoyé ! Je vous répondrai bientôt.",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "error_name": "Le nom est requis",
+    "error_email_required": "L'adresse courriel est requise",
+    "error_email_format": "Veuillez entrer une adresse courriel valide",
+    "error_message": "Le message est requis"
+  },
+  "footer": {
+    "cta_title": "Construisons un Projet !",
+    "cta_sub": "Intéressé à travailler ensemble ? Contactez-moi aujourd'hui et construisons quelque chose de formidable. J'apporte le code.",
+    "cta_btn": "Commencer",
+    "tagline": "Créer des produits numériques évolutifs, une ligne à la fois.",
+    "copyright": "© {{year}} Charles Winfield. Tous droits réservés."
+  },
+  "login": {
+    "title": "Connexion Admin",
+    "subtitle": "Entrez vos identifiants pour accéder au panneau d'administration",
+    "email_label": "Adresse Courriel",
+    "email_placeholder": "admin@exemple.com",
+    "password_label": "Mot de Passe",
+    "password_placeholder": "••••••••",
+    "submit": "Se Connecter",
+    "submitting": "Connexion…",
+    "error_email_required": "L'adresse courriel est requise",
+    "error_email_format": "Veuillez entrer une adresse courriel valide",
+    "error_password_required": "Le mot de passe est requis",
+    "auth_error": "Identifiants de connexion invalides",
+    "auth_fail": "Échec de la connexion. Veuillez réessayer."
+  }
+}

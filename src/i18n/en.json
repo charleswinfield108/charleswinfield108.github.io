@@ -1,0 +1,183 @@
+{
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "links": "Links",
+    "contact": "Contact",
+    "resume": "Resume"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "tagline": "I Create Scalable Digital Products With",
+    "tagline_accent": "AI, Experience, And Skill.",
+    "bio": "A Full-Stack MERN Developer based in Columbus, Ohio — building real-world applications with JavaScript, React, Node.js, Express, and MongoDB, with a background in freelance client work, multimedia design, and military service.",
+    "cta_contact": "Get In Contact",
+    "cta_work": "View My Work",
+    "badge_role": "Full Stack MERN Developer",
+    "badge_available": "Available for Work"
+  },
+  "about": {
+    "section_label": "Who I Am",
+    "title": "About",
+    "title_name": "Charles",
+    "bio": [
+      "Full-stack MERN developer based in Columbus, Ohio with 30+ completed projects and a background in freelance client work, multimedia design, and military service. I build real-world applications using JavaScript, React, Node.js, Express, and MongoDB — with a strong focus on API development, database design, and modern web architecture.",
+      "I leverage AI-assisted development tools to ship clean, maintainable code faster, and I bring exceptional communication, professionalism, and reliability to every team I join. My foundation spans formal web development studies at St. Petersburg College and interactive multimedia training at Columbus State."
+    ],
+    "stat_years": "Years Experience",
+    "stat_projects": "Projects Built",
+    "stat_tech": "Technologies",
+    "stat_passion": "Passion Driven",
+    "process_label": "How I Work",
+    "process_title": "My Development Process",
+    "process": [
+      {
+        "number": "01",
+        "title": "Discovery & Strategy",
+        "desc": "Establishing the \"Why\" and \"What.\" I identify the problem, study the landscape, document requirements, define the MVP, and select the right tech stack for the job."
+      },
+      {
+        "number": "02",
+        "title": "Architecture & Design",
+        "desc": "Creating the blueprint. I design UI/UX wireframes alongside the backend schema and API contracts — planning exactly how data flows from a user's click to the database."
+      },
+      {
+        "number": "03",
+        "title": "Implementation",
+        "desc": "The heavy lifting. I build the responsive frontend, set up server logic and database integration, then connect the two via APIs to deliver a cohesive, functional application."
+      },
+      {
+        "number": "04",
+        "title": "QA & Launch",
+        "desc": "Ensuring stability and going live. Unit tests, integration tests, and bug fixes confirm the build is production-ready before deploying to AWS, Vercel, or Heroku."
+      }
+    ]
+  },
+  "skills": {
+    "tech_label": "What I Know",
+    "tech_title": "Technical Skills",
+    "stack_label": "Tools I Use",
+    "stack_title": "Technology Stack",
+    "soft_label": "How I Work",
+    "soft_title": "Interpersonal Skills",
+    "progress": [
+      {
+        "name": "Front End Development",
+        "desc": "Building responsive, pixel-perfect interfaces with React, TypeScript, and modern CSS. I translate designs into fast, accessible user experiences with smooth micro-interactions and clean component architecture."
+      },
+      {
+        "name": "Back End Development",
+        "desc": "Designing and building RESTful APIs and server-side logic with Node.js and Express. From authentication systems to data pipelines, I architect back-end solutions that are reliable, secure, and built to scale."
+      },
+      {
+        "name": "Database & API Design",
+        "desc": "Modeling relational and document-based schemas with MySQL, PostgreSQL, MongoDB, and Supabase. I design APIs that are intuitive, versioned, and optimised for performance from day one."
+      },
+      {
+        "name": "UI / UX Design",
+        "desc": "Translating user requirements into wireframes and polished interfaces. I approach every design decision with usability, visual hierarchy, and brand consistency in mind — from concept through to final pixel."
+      }
+    ],
+    "soft": [
+      {
+        "name": "Problem Solving",
+        "desc": "I approach every challenge methodically — breaking complex requirements into testable, incremental steps that ship on time."
+      },
+      {
+        "name": "Communication",
+        "desc": "I communicate clearly with both technical teammates and non-technical stakeholders, keeping everyone aligned and informed."
+      },
+      {
+        "name": "Adaptability",
+        "desc": "Comfortable switching between languages, frameworks, and problem domains — I thrive in fast-moving environments."
+      }
+    ]
+  },
+  "works": {
+    "label": "My Portfolio",
+    "title": "Selected Works",
+    "view_portfolio": "View My Portfolio →",
+    "view_full": "View Full Project →"
+  },
+  "portfolio_hero": {
+    "label": "My Portfolio",
+    "title": "Experience &",
+    "title_accent": "Projects.",
+    "subtitle": "Full-Stack MERN Developer · U.S. Army Veteran · 30+ Projects Built",
+    "download": "Download CV",
+    "badge_available": "Available for Work",
+    "stat_projects": "Projects Built",
+    "stat_modules": "Modules Done",
+    "stat_years": "Yrs Experience"
+  },
+  "education": {
+    "label": "Where I Learned",
+    "title": "Education"
+  },
+  "experience": {
+    "label": "Where I've Worked",
+    "title": "Work Experience"
+  },
+  "projects": {
+    "label": "What I've Built",
+    "title": "Projects",
+    "view_github": "View on GitHub →"
+  },
+  "links": {
+    "label": "Tools of the Trade",
+    "title": "Links &",
+    "title_accent": "Resources",
+    "subtitle": "The resources, references, and tools I rely on every day as a developer."
+  },
+  "contact": {
+    "label": "Get In Touch",
+    "heading": "Let's",
+    "heading_accent": "Work Together",
+    "subtitle": "Have a project in mind, a question, or just want to say hello? Send me a message and I'll get back to you.",
+    "info_heading": "Contact Info",
+    "email_label": "Email",
+    "location_label": "Location",
+    "location_value": "Available Remotely",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "form": {
+    "name_label": "Name",
+    "name_placeholder": "Your name",
+    "email_label": "Email",
+    "email_placeholder": "your@email.com",
+    "message_label": "Message",
+    "message_placeholder": "Tell me about your project…",
+    "submit": "Send Message",
+    "submitting": "Sending…",
+    "retry": "Try Again",
+    "success": "Message sent! I'll get back to you soon.",
+    "error": "Something went wrong. Please try again.",
+    "error_name": "Name is required",
+    "error_email_required": "Email is required",
+    "error_email_format": "Please enter a valid email address",
+    "error_message": "Message is required"
+  },
+  "footer": {
+    "cta_title": "Let's Build a Project!",
+    "cta_sub": "Interested in working together? Reach out today and let's build something great. I'll bring the code.",
+    "cta_btn": "Get Started",
+    "tagline": "Building scalable digital products, one line at a time.",
+    "copyright": "© {{year}} Charles Winfield. All rights reserved."
+  },
+  "login": {
+    "title": "Admin Login",
+    "subtitle": "Enter your credentials to access the admin panel",
+    "email_label": "Email Address",
+    "email_placeholder": "admin@example.com",
+    "password_label": "Password",
+    "password_placeholder": "••••••••",
+    "submit": "Sign In",
+    "submitting": "Signing In…",
+    "error_email_required": "Email is required",
+    "error_email_format": "Please enter a valid email address",
+    "error_password_required": "Password is required",
+    "auth_error": "Invalid login credentials",
+    "auth_fail": "Login failed. Please try again."
+  }
+}

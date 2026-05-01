@@ -238,16 +238,23 @@
   overflow: hidden;
   border: 1px solid rgba(34, 177, 196, 0.12);
   transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .works__preview-frame.next   { transform: translateY(105%); }
 .works__preview-frame.active { transform: translateY(0); }
 .works__preview-frame.past   { transform: translateY(-105%); }
 
+.works__preview-img--clickable {
+  cursor: zoom-in;
+}
+
 .works__preview-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .works__preview-placeholder {
@@ -263,6 +270,100 @@
   inset: 0;
   background-image: radial-gradient(rgba(34, 177, 196, 0.12) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+/* ── Modal ── */
+.works__modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.works__modal {
+  background: rgba(13, 16, 40, 0.95);
+  border: 1px solid rgba(34, 177, 196, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  max-width: 720px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.works__modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 13px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.works__modal-close:hover {
+  background: rgba(34, 177, 196, 0.3);
+}
+
+.works__modal-img {
+  width: 100%;
+  display: block;
+  max-height: 360px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.works__modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.works__modal-title {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 800;
+  color: var(--teal);
+}
+
+.works__modal-desc {
+  font-size: 13px;
+  color: var(--silver);
+  line-height: 1.85;
+  opacity: 0.85;
+}
+
+.works__modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 /* ── Responsive ── */

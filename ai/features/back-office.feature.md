@@ -1,322 +1,395 @@
-# Feature Spec — Admin Back Office
-
-> **Prerequisite:** Read [ai-spec.md](../ai-spec.md) before implementing anything in this feature.
-> This feature depends on:
-> - Supabase client: [contact-page.feature.md](contact-page.feature.md)
-> - Auth session + `ProtectedRoute`: [login-page.feature.md](login-page.feature.md)
-
----
+# Back Office Feature Specification
 
 ## 1. Feature Goal & Scope
 
 ### Goal
-Build the Admin Back Office — a protected page at `/backoffice` that is only accessible to authenticated admins. It fetches all contact form submissions from the Supabase `messages` table, displays them in a sortable table (newest first), and allows the admin to view a full message in a modal and delete individual messages. A logout button ends the session and redirects away from the protected area.
+Create a secure, authenticated admin back office where authorized users can view, manage, and delete all messages submitted through the Contact Page form.
 
-### In scope
-- Back Office page component (`src/pages/BackOffice.tsx`) at `/backoffice`
-- `<ProtectedRoute>` guard — unauthenticated users are redirected to `/login`
-- Fetch all rows from the `messages` table (authenticated SELECT)
-- Table display: Name, Email, Date, Actions columns; newest first
-- Empty state: "No messages yet" when the table is empty
-- Error state: message displayed when the fetch fails
-- Delete row: Supabase `DELETE` by `id`; row removed from UI instantly (optimistic update)
-- View message modal: full name, email, date/time, message body; closeable via button, outside click, or Escape key
-- Logout button: calls `supabase.auth.signOut()`, redirects to `/` (Home)
-- Route absent from all public navigation
+### In Scope
+- Protected admin dashboard accessible only to authenticated users
+- Display all messages in a searchable, sortable table
+- View full message details in a modal dialog
+- Delete messages with confirmation
+- Session management and logout functionality
+- Error handling and empty states
 
-### Out of scope
-- Pagination — all messages fetched in one query (acceptable for a personal portfolio volume)
-- Search or filter on messages
-- Replying to messages from the back office
-- Editing messages
-- Admin user management (adding / removing admin accounts)
-- Dark / light mode — covered in Feature 08
+### Out of Scope
+- User role-based permissions (single admin account)
+- Message search/filtering (future feature)
+- Bulk operations (edit, archive, export)
+- Email notifications on new messages
 
 ---
 
 ## 2. Requirements Breakdown
 
-### R1 — Protected route
-- Route: `/backoffice`
-- Wrapped in `<ProtectedRoute>` (built in the Login feature)
-- On load: `ProtectedRoute` calls `supabase.auth.getSession()`
-  - If no valid session → redirect to `/login` immediately
-  - If valid session → render `<BackOffice />`
-- The route is **not** linked from the Header, Footer, or mobile BottomNav
-- Not reachable from any public page link — direct URL or programmatic redirect only
+### R1: Authentication Gate
+**Requirement**: Back Office route must be protected by Supabase authentication.
+- Route: `/#/backoffice`
+- Redirect unauthenticated users to `/#/login`
+- Verify session on page load
+- Redirect already-logged-in users from login page to back office
 
-### R2 — Messages fetch
-- On component mount, fetch all rows from `messages`:
-  ```ts
-  const { data, error } = await supabase
-    .from('messages')
-    .select('id, name, email, message, created_at')
-    .order('created_at', { ascending: false });
-  ```
-- Three possible states after fetch:
+**Acceptance Criteria**:
+- [ ] Navigating to `/backoffice` while NOT authenticated redirects to `/login`
+- [ ] Navigating to `/backoffice` while authenticated renders the page
+- [ ] Session check completes before rendering any content
+- [ ] Page does not flicker or show protected content briefly
 
-| State | Condition | UI |
-|---|---|---|
-| Loading | Fetch in flight | Spinner or "Loading messages…" text |
-| Empty | `data` is an empty array | "No messages yet." friendly message |
-| Error | `error` is not null | "Failed to load messages. Please try again." (red/distinct) |
-| Populated | `data.length > 0` | Render messages table |
+---
 
-### R3 — Messages table
-- Rendered as an HTML `<table>` (or accessible equivalent)
-- Four columns:
+### R2: Messages Table Display
+**Requirement**: Display all contact messages in a paginated, ordered table.
+- Fetch all messages from `messages` table
+- Order by `created_at` DESC (newest first)
+- Display columns: **Name**, **Email**, **Date**, **Actions**
+- Show message count and loading state
 
-| Column | Source field | Notes |
-|---|---|---|
-| **Name** | `name` | Plain text |
-| **Email** | `email` | Plain text (or `mailto:` link) |
-| **Date** | `created_at` | Formatted as human-readable date (e.g. "Apr 26, 2026, 3:42 PM") |
-| **Actions** | — | "View" button + "Delete" button (or icon) per row |
+**Acceptance Criteria**:
+- [ ] Messages load on page mount
+- [ ] Table displays all submitted messages
+- [ ] Messages are ordered newest-first
+- [ ] Each row displays: sender name, email, submission date
+- [ ] Date format is readable (e.g., "Apr 29, 2026 at 5:32 PM")
+- [ ] Loading spinner shows while fetching
+- [ ] Error message displays if fetch fails
+- [ ] "No messages yet" message displays if table is empty
+- [ ] Table is responsive on mobile devices
 
-- Rows ordered by `created_at` descending — newest first
-- Table is responsive: on narrow viewports it scrolls horizontally within its container, or columns collapse gracefully (no broken layout)
+---
 
-### R4 — View message modal
-- Triggered by clicking the "View" button (or the row itself) for a given message
-- Modal overlays the page with a semi-transparent backdrop
-- Modal content:
-  - Sender's **name** and **email**
-  - **Date and time** of submission (formatted, same as table)
-  - Full **message** body (preserves line breaks — `white-space: pre-wrap`)
-- Close mechanisms (all three required):
-  1. A close button (× icon or "Close" label) inside the modal
-  2. Clicking the backdrop outside the modal
-  3. Pressing the `Escape` key
-- When open, background page scroll is locked (`overflow: hidden` on `body`)
-- Focus is trapped inside the modal while open (accessibility)
-- On close, focus returns to the "View" button that triggered the modal
+### R3: View Message Modal
+**Requirement**: Allow users to read full message text and sender details.
+- Trigger: Click on a message row OR a "View" button in the Actions column
+- Modal displays:
+  - Sender name and email
+  - Date and time sent
+  - Full message body text
+  - Close button (X icon)
 
-### R5 — Delete message
-- Each table row has a delete button (trash icon from `lucide-react` or "Delete" text)
-- On click: show a brief inline confirmation or rely on the delete being reversible via the Supabase dashboard — decision: **no confirmation dialog** (keeps the UI simple; messages can be recovered from Supabase directly if needed)
-- Delete call:
-  ```ts
-  const { error } = await supabase
-    .from('messages')
-    .delete()
-    .eq('id', message.id);
-  ```
-- On success: remove the row from local state immediately (optimistic — no re-fetch)
-- On error: display a brief error toast or inline message; the row remains in the table
+**Acceptance Criteria**:
+- [ ] Clicking a message row opens the modal
+- [ ] Modal displays correct message content
+- [ ] Close button (X) visible and functional
+- [ ] Clicking outside modal closes it
+- [ ] Pressing Escape key closes it
+- [ ] Modal is centered and scrollable if content is long
+- [ ] Modal overlays the page with a semi-transparent backdrop
 
-### R6 — Logout
-- A "Logout" button is visible on the Back Office page (top-right or prominent placement)
-- On click:
-  ```ts
-  await supabase.auth.signOut();
-  navigate('/', { replace: true });
-  ```
-- Session is fully cleared from `localStorage`
-- User is redirected to Home (`/`) — not to `/login` (reduces confusion for casual URL-guessers)
-- After logout, navigating back to `/backoffice` redirects to `/login` (ProtectedRoute re-validates)
+---
+
+### R4: Message Deletion
+**Requirement**: Admin can delete messages from the table.
+- Delete button (trash icon) in Actions column for each message
+- Show confirmation before deletion
+- Remove message from table instantly after confirmation
+- Update message count
+
+**Acceptance Criteria**:
+- [ ] Delete button visible in Actions column
+- [ ] Clicking delete shows a confirmation dialog
+- [ ] Confirmation dialog has "Cancel" and "Delete" buttons
+- [ ] Clicking "Cancel" closes dialog without deleting
+- [ ] Clicking "Delete" removes message from database
+- [ ] Message disappears from table immediately
+- [ ] Error message displays if delete fails
+- [ ] Message count updates after deletion
+
+---
+
+### R5: Logout Functionality
+**Requirement**: Allow admin to end session and return to public site.
+- Logout button visible on page
+- Call `supabase.auth.signOut()`
+- Clear all session data
+- Redirect to Home page
+
+**Acceptance Criteria**:
+- [ ] Logout button is visible and accessible
+- [ ] Clicking logout calls signOut() method
+- [ ] Session is cleared (no residual auth data)
+- [ ] User redirected to Home page after logout
+- [ ] Back button cannot return to protected page
+- [ ] Navigating to `/backoffice` after logout redirects to `/login`
+
+---
+
+### R6: Navigation & UI
+**Requirement**: Back Office page follows portfolio design and provides clear navigation.
+- Page header with title
+- Consistent header component (does NOT show in login page, DOES show here)
+- Logout button in header or page footer
+- Back to home link (optional)
+- Dark theme consistency with portfolio
+
+**Acceptance Criteria**:
+- [ ] Header component renders
+- [ ] Logout button is accessible and labeled clearly
+- [ ] Page uses consistent color scheme (navy, teal, yellow)
+- [ ] All interactive elements have hover states
+- [ ] Page is accessible (ARIA labels, semantic HTML)
+
+---
+
+### R7: Error Handling
+**Requirement**: Gracefully handle network errors and edge cases.
+- Handle failed message fetch
+- Handle failed delete operation
+- Handle auth session expiration
+- Handle network timeouts
+
+**Acceptance Criteria**:
+- [ ] Fetch error shows user-friendly message with retry option
+- [ ] Delete error shows message and button to retry
+- [ ] Session expiration redirects to login with notification
+- [ ] Network timeout doesn't crash the page
+- [ ] All error messages are clear and actionable
 
 ---
 
 ## 3. Interfaces Involved
 
 ### Pages
-| Route | Component | Guard | Notes |
-|---|---|---|---|
-| `/backoffice` | `src/pages/BackOffice.tsx` | `<ProtectedRoute>` | Admin only |
+- **Back Office Page** (`src/pages/Admin.tsx` or `src/pages/BackOffice.tsx`)
+  - Responsible for session checking, layout, logout
+  - Fetches messages on mount
+  - Coordinates message display, modal, and delete operations
 
 ### Components
-| File | Purpose |
-|---|---|
-| `src/components/ProtectedRoute.tsx` | Auth guard — built in Login feature, consumed here |
-| `src/components/ui/MessageModal.tsx` | Modal overlay — full message detail + close controls |
-| `src/components/ui/MessageTable.tsx` | Table of messages with View + Delete per row |
+- **Messages Table** (`src/components/ui/MessagesTable.tsx`)
+  - Displays table rows with name, email, date, actions
+  - Emits events for row clicks and delete button clicks
+  
+- **View Message Modal** (`src/components/ui/ViewMessageModal.tsx`)
+  - Displays full message details
+  - Has close button and backdrop click handling
+  - Handles Escape key press
 
-### Supabase
-| Operation | Query | Role required |
-|---|---|---|
-| Fetch messages | `SELECT` from `messages` ordered by `created_at DESC` | `authenticated` |
-| Delete message | `DELETE` from `messages` where `id = ?` | `authenticated` |
+- **Delete Confirmation Dialog** (`src/components/ui/DeleteConfirmDialog.tsx`)
+  - Shows confirmation before deletion
+  - Has Cancel and Delete buttons
 
-RLS policies (set in Supabase dashboard):
-- `authenticated` role: SELECT + DELETE on `messages`
-- `anon` role: INSERT only (set in Contact Page feature)
-- No UPDATE for any role
-
-### Routing
-| Hook | Usage |
-|---|---|
-| `useNavigate()` | Redirect to `/` after logout |
+### Services
+- **Supabase Client** (`src/lib/supabaseClient.ts`)
+  - `fetchMessages()` - GET all messages ordered DESC by created_at
+  - `deleteMessage(id: uuid)` - DELETE a message by ID
+  - `auth.signOut()` - Clear session
 
 ---
 
-## 4. Data, Validations & Expected Behaviour
+## 4. Data Schemas & Validations
 
-### `Message` type
-```ts
-export interface Message {
-  id: string;          // uuid
-  name: string;
-  email: string;
-  message: string;
-  created_at: string;  // ISO 8601 timestamp
+### Messages Table
+```sql
+CREATE TABLE messages (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  email text NOT NULL,
+  message text NOT NULL,
+  created_at timestamptz DEFAULT now()
+);
+```
+
+### Message Object
+```typescript
+interface Message {
+  id: string
+  name: string
+  email: string
+  message: string
+  created_at: string
 }
 ```
 
-### Component state shape
-```ts
-// BackOffice.tsx local state
-interface BackOfficeState {
-  messages: Message[];
-  fetchStatus: 'loading' | 'error' | 'success';
-  selectedMessage: Message | null;   // null = modal closed
-  deletingIds: Set<string>;          // tracks in-flight deletes
-}
-```
-
-### Date formatting
-```ts
-const formatDate = (iso: string): string =>
-  new Date(iso).toLocaleString('en-CA', {
-    year: 'numeric', month: 'short', day: 'numeric',
-    hour: '2-digit', minute: '2-digit',
-  });
-// e.g. "Apr 26, 2026, 03:42 PM"
-```
-
-### Delete — optimistic update
-```ts
-// Remove from local state immediately on button click
-setMessages(prev => prev.filter(m => m.id !== id));
-// Call Supabase in background
-const { error } = await supabase.from('messages').delete().eq('id', id);
-// On error: re-add the message to state + show error
-if (error) setMessages(prev => [...prev, deletedMessage]);
-```
-
-### Modal — keyboard trap
-- On open: focus the close button or modal container
-- `keydown` listener on `document` for `Escape` → close modal
-- Tab cycling stays within modal elements while open
-
-### Expected behaviour — edge cases
-| Scenario | Expected result |
-|---|---|
-| Session expires while on `/backoffice` | Next Supabase call returns auth error → redirect to `/login` |
-| Delete of the last message | Table transitions to empty state: "No messages yet." |
-| Modal open → message deleted by another tab | Modal stays open with the last fetched data; stale state acceptable |
-| Very long message body | Modal scrolls internally; page does not scroll |
-| Network offline during delete | Row re-appears in table; error message shown |
+### Validation Rules
+- **name**: Required, 2-100 characters, non-empty after trim
+- **email**: Required, valid email format
+- **message**: Required, 10-5000 characters, non-empty after trim
+- **created_at**: ISO 8601 timestamp, auto-generated
 
 ---
 
 ## 5. User Flow
 
-### Unauthenticated access attempt
-```
-User navigates to /backoffice
-        │
-        ▼
-ProtectedRoute checks session → none found
-        │
-        ▼
-Redirect to /login
-```
+### Happy Path: Viewing Messages
+1. User logs in with credentials
+2. User navigates to `/backoffice`
+3. Page verifies session → renders Back Office
+4. Messages table loads and displays all submissions
+5. User clicks on a message row
+6. Modal opens showing full message details
+7. User reads message and clicks "Close"
+8. Modal closes, table remains visible
 
-### Authenticated admin session
-```
-Admin navigates to /backoffice (authenticated)
-        │
-        ▼
-ProtectedRoute checks session → valid → render BackOffice
-        │
-        ▼
-Messages fetch in flight → "Loading messages…"
-        │
-        ├─── Fetch fails → "Failed to load messages. Please try again."
-        │
-        ├─── Fetch returns empty → "No messages yet."
-        │
-        └─── Fetch returns rows → Messages table rendered (newest first)
-                    │
-                    ├─── Admin clicks "View"
-                    │           │
-                    │           ▼
-                    │    Modal opens: name, email, date/time, full message
-                    │    Close via ×, backdrop click, or Escape
-                    │
-                    ├─── Admin clicks "Delete" (trash icon)
-                    │           │
-                    │           ▼
-                    │    Row removed from table instantly
-                    │    Supabase DELETE called in background
-                    │    On error: row re-appears + error shown
-                    │
-                    └─── Admin clicks "Logout"
-                                │
-                                ▼
-                         supabase.auth.signOut()
-                         Session cleared from localStorage
-                         navigate('/', { replace: true })
-```
+### Delete Flow
+1. User sees messages in table
+2. User clicks trash icon in Actions column
+3. Confirmation dialog appears
+4. User clicks "Delete" to confirm
+5. Message is deleted from database
+6. Message disappears from table instantly
+7. Message count updates
+
+### Logout Flow
+1. User is on Back Office page
+2. User clicks "Logout" button
+3. Session is cleared
+4. User redirected to Home page
+5. If user navigates to `/backoffice`, they're redirected to `/login`
+
+### Error Scenarios
+1. **Session Expired**: User on Back Office → session expires → redirect to login
+2. **Fetch Fails**: Messages fail to load → show error message with retry button
+3. **Delete Fails**: Delete operation fails → show error with retry option
+4. **Network Timeout**: Request hangs → show timeout message → user can retry
 
 ---
 
-## 6. Acceptance Criteria
+## 6. Acceptance Criteria Checklist
 
-All criteria must pass before merging `feature/back-office` → `dev`.
+### Back Office Route Protection
+- [ ] `/backoffice` requires authentication
+- [ ] Unauthenticated requests redirect to `/login`
+- [ ] Session is verified before rendering
+- [ ] Page is NOT listed in public navigation
 
-### Protected route
-- [ ] **AC1** — Navigating to `/backoffice` without a session redirects to `/login`
-- [ ] **AC2** — Navigating to `/backoffice` with a valid session renders the Back Office page
-- [ ] **AC3** — `/backoffice` is not linked from the Header, Footer, or mobile BottomNav
+### Messages Display
+- [ ] All messages from database appear in table
+- [ ] Messages ordered newest-first (DESC by created_at)
+- [ ] Table columns: Name, Email, Date, Actions
+- [ ] Date displayed in readable format
+- [ ] Loading spinner shows during fetch
+- [ ] Error message if fetch fails
+- [ ] "No messages" message if table empty
+- [ ] Message count displayed (e.g., "4 messages")
 
-### Messages fetch
-- [ ] **AC4** — On mount, all rows from the `messages` table are fetched for the authenticated user
-- [ ] **AC5** — A loading indicator is shown while the fetch is in flight
-- [ ] **AC6** — When the table is empty, "No messages yet." (or equivalent) is displayed
-- [ ] **AC7** — When the fetch fails, a distinct error message is displayed
+### View Message Modal
+- [ ] Modal opens when clicking message row
+- [ ] Modal displays: name, email, date, full message text
+- [ ] Close button visible and functional
+- [ ] Clicking outside modal closes it
+- [ ] Pressing Escape closes it
+- [ ] Modal is accessible (focus management, ARIA roles)
 
-### Messages table
-- [ ] **AC8** — The table renders Name, Email, Date, and Actions columns
-- [ ] **AC9** — Each row corresponds to one message from the database
-- [ ] **AC10** — Messages are ordered newest first (by `created_at` descending)
-- [ ] **AC11** — Each row has a "View" button and a "Delete" button
-
-### View modal
-- [ ] **AC12** — Clicking "View" opens a modal with the sender's name, email, date/time, and full message
-- [ ] **AC13** — The modal close button (×) dismisses the modal
-- [ ] **AC14** — Clicking the backdrop outside the modal dismisses it
-- [ ] **AC15** — Pressing `Escape` dismisses the modal
-- [ ] **AC16** — Background page scroll is locked while the modal is open
-- [ ] **AC17** — Long message bodies scroll inside the modal; the page does not scroll
-
-### Delete
-- [ ] **AC18** — Clicking "Delete" removes the row from the table immediately
-- [ ] **AC19** — A Supabase DELETE is called with the correct message `id`
-- [ ] **AC20** — On a failed delete, the row reappears and an error is shown
-- [ ] **AC21** — After deleting the last message, the empty state is displayed
+### Delete Functionality
+- [ ] Delete button in Actions column
+- [ ] Confirmation dialog before delete
+- [ ] Message deleted from database on confirm
+- [ ] Message disappears from table instantly
+- [ ] Message count updates
+- [ ] Error message if delete fails
+- [ ] Retry option on error
 
 ### Logout
-- [ ] **AC22** — A "Logout" button is visible on the Back Office page
-- [ ] **AC23** — Clicking "Logout" calls `supabase.auth.signOut()`
-- [ ] **AC24** — After logout, the user is redirected to `/` (Home)
-- [ ] **AC25** — After logout, navigating to `/backoffice` redirects to `/login`
+- [ ] Logout button visible
+- [ ] Clicking logout calls `signOut()`
+- [ ] User redirected to Home page
+- [ ] Session fully cleared
+- [ ] Cannot return to `/backoffice` without re-login
 
-### RLS (verified in Supabase dashboard)
-- [ ] **AC26** — `authenticated` role can SELECT from `messages`
-- [ ] **AC27** — `authenticated` role can DELETE from `messages`
-- [ ] **AC28** — `anon` role cannot SELECT or DELETE from `messages`
+### UI/UX
+- [ ] Header component renders
+- [ ] Consistent portfolio design
+- [ ] Responsive on mobile
+- [ ] All interactive elements have hover states
+- [ ] Page is accessible (semantic HTML, ARIA labels)
+- [ ] Loading and error states are clear
 
-### Build & code quality
-- [ ] **AC29** — `tsc --noEmit` passes with zero errors
-- [ ] **AC30** — `npm run build` succeeds with zero errors
-- [ ] **AC31** — No `console.log` or debug code left in fetch / delete / auth handlers
-
-### Responsive
-- [ ] **AC32** — Back Office table is usable at 768px and 1280px viewports
-- [ ] **AC33** — Table scrolls horizontally on narrow viewports without breaking the layout
-- [ ] **AC34** — Modal is readable and closeable at 375px viewport width
+### Performance
+- [ ] Messages load within 2 seconds
+- [ ] Delete operation completes within 1 second
+- [ ] Modal open/close is smooth
+- [ ] No unnecessary re-renders
 
 ---
 
-*Last updated: 2026-04-26 | Depends on: ai-spec.md, contact-page.feature.md, login-page.feature.md | This is the final protected feature.*
+## 7. Implementation Notes
+
+### Technology Stack
+- **Frontend**: React + TypeScript
+- **Database**: Supabase PostgreSQL
+- **Auth**: Supabase Auth (JWT session)
+- **UI**: Custom CSS with portfolio design system
+- **State Management**: React hooks (useState, useEffect)
+
+### RLS (Row-Level Security) Policies
+```sql
+-- Allow authenticated users to SELECT all messages
+CREATE POLICY "Authenticated view messages" ON messages
+  FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+-- Allow only authenticated users to DELETE their own messages (future)
+CREATE POLICY "Authenticated delete messages" ON messages
+  FOR DELETE
+  USING (auth.role() = 'authenticated');
+```
+
+### Key Design Decisions
+1. **Single Admin Account**: No user roles/permissions needed initially
+2. **Soft Delete vs Hard Delete**: Implement hard delete for simplicity
+3. **Message Limit**: No pagination initially; load all messages (can optimize later)
+4. **Modal Library**: Use custom React modal (no external library)
+5. **Error Handling**: User-friendly messages + retry capability
+
+---
+
+## 8. Testing Strategy
+
+### Manual Testing
+1. [ ] Test login → back office flow
+2. [ ] Test unauthenticated access redirect
+3. [ ] Test message fetching and display
+4. [ ] Test view message modal
+5. [ ] Test delete with confirmation
+6. [ ] Test logout functionality
+7. [ ] Test session expiration
+8. [ ] Test mobile responsiveness
+9. [ ] Test keyboard navigation (Tab, Escape)
+10. [ ] Test error scenarios (network down, API errors)
+
+### Acceptance Test Scenarios
+```gherkin
+Scenario: Admin views all contact messages
+  Given I am logged in as admin
+  When I navigate to /backoffice
+  Then I see a table with all messages
+  And messages are ordered newest-first
+  And each row shows Name, Email, Date
+
+Scenario: Admin views full message
+  Given I am on Back Office page
+  When I click on a message row
+  Then a modal opens showing full message details
+  And I can close it with the X button or Escape key
+
+Scenario: Admin deletes a message
+  Given I am on Back Office page
+  When I click the delete button for a message
+  Then a confirmation dialog appears
+  And after confirming, the message is deleted
+  And the table updates immediately
+
+Scenario: Admin logs out
+  Given I am on Back Office page
+  When I click Logout
+  Then I am redirected to Home page
+  And the session is cleared
+  And navigating to /backoffice redirects to /login
+```
+
+---
+
+## 9. Success Criteria
+
+The Back Office feature is complete when:
+1. ✅ Authenticated users can access `/backoffice` securely
+2. ✅ All messages display in a well-formatted table
+3. ✅ Users can view full message details in a modal
+4. ✅ Users can delete messages with confirmation
+5. ✅ Users can logout and session is cleared
+6. ✅ Error states are handled gracefully
+7. ✅ Page is responsive and accessible
+8. ✅ All acceptance criteria are met
+9. ✅ Code follows portfolio conventions and style
+10. ✅ Feature is documented and tested manually

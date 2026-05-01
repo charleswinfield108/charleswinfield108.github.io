@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import { WORK_EXPERIENCE } from '../../lib/data'
 import { useReveal } from '../../hooks/useReveal'
 import './PortfolioExperience.css'
 
 export default function PortfolioExperience() {
+  const { t } = useTranslation()
   const { ref: headerRef, visible: headerVisible } = useReveal()
   const { ref: timelineRef, visible: timelineVisible } = useReveal()
 
@@ -14,14 +16,11 @@ export default function PortfolioExperience() {
           className={`p-experience__header reveal ${headerVisible ? 'visible' : ''}`}
           ref={headerRef as React.RefObject<HTMLDivElement>}
         >
-          <span className="section-label">Where I've Worked</span>
-          <h2 className="p-section-title">Work Experience</h2>
+          <span className="section-label">{t('experience.label')}</span>
+          <h2 className="p-section-title">{t('experience.title')}</h2>
         </div>
 
-        <div
-          className="p-timeline"
-          ref={timelineRef as React.RefObject<HTMLDivElement>}
-        >
+        <div className="p-timeline" ref={timelineRef as React.RefObject<HTMLDivElement>}>
           {WORK_EXPERIENCE.map((entry, i) => (
             <div
               key={entry.id}

@@ -1,7 +1,24 @@
-import { BIO } from '../../lib/data'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import { Send } from 'lucide-react'
 import './Hero.css'
 
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.6, delay, ease: 'easeOut' as const } },
+})
+
+const fadeRight = {
+  initial: { opacity: 0, x: 40 },
+  animate: { opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.3, ease: 'easeOut' as const } },
+}
+
+const TECH_PILLS = ['MongoDB', 'Express.JS', 'React', 'Node.JS', 'AI Developer']
+
 export default function Hero() {
+  const { t } = useTranslation()
+
   return (
     <section className="hero" id="home">
       <div className="container">
@@ -9,56 +26,63 @@ export default function Hero() {
 
           {/* Left — heading + CTA */}
           <div className="hero__content">
-            <h1 className="hero__name">
+            <motion.h1 className="hero__name" {...fadeUp(0)}>
               <span className="hero__wave">👋</span>
-              <span className="hero__name-hello">Hi, I'm</span>
+              <span className="hero__name-hello">{t('hero.greeting')}</span>
               <span className="hero__name-main">Charles</span>
-            </h1>
+            </motion.h1>
 
-            <p className="hero__tagline">
-              I Create Scalable Digital Products With{' '}
-              <span className="hero__tagline-accent">AI, Experience, And Skill.</span>
-            </p>
+            <motion.p className="hero__tagline" {...fadeUp(0.15)}>
+              {t('hero.tagline')}{' '}
+              <span className="hero__tagline-accent">{t('hero.tagline_accent')}</span>
+            </motion.p>
 
-            <p className="hero__bio">{BIO.intro}</p>
+            <motion.p className="hero__bio" {...fadeUp(0.25)}>{t('hero.bio')}</motion.p>
 
-            <div className="hero__ctas">
-              <a href="#contact" className="btn btn-outline hero__btn-contact">Get In Contact</a>
-              <a href="#works" className="btn btn-primary">View My Work</a>
-            </div>
+            <motion.div className="hero__ctas" {...fadeUp(0.35)}>
+              <Link
+                to="/contact"
+                className="btn btn-outline header__hire"
+              >
+                {t('hero.cta_contact')}
+                <Send size={14} />
+              </Link>
+              <Link to="/portfolio" className="btn btn-outline">{t('hero.cta_work')}</Link>
+            </motion.div>
           </div>
 
-          {/* Right — profile card + bio */}
-          <div className="hero__right">
+          {/* Right — profile card */}
+          <motion.div className="hero__right" {...fadeRight}>
             <div className="hero__profile-card">
               <div className="hero__profile-img-wrap">
+                {/* AI-generated portrait — created with ChatGPT (DALL·E) */}
                 <img
-                  src="/assets/images/hero-image.png"
+                  src="/assets/images/cw-hero-ai.png"
                   alt="Charles Winfield"
                   className="hero__profile-img"
                 />
               </div>
 
               <div className="hero__profile-body">
-                <div className="hero__badge">
-                  <span className="hero__badge-dot" />
-                  Available for Work
+                <div className="hero__profile-body-row">
+                  <div className="hero__badge">
+                    <span className="hero__badge-dot" />
+                    {t('hero.badge_role')}
+                  </div>
+                  <div className="hero__badge">
+                    <span className="hero__badge-dot" />
+                    {t('hero.badge_available')}
+                  </div>
                 </div>
 
-                <div className="hero__stats-row">
-                  <div className="hero__stats-item">
-                    <span className="hero__stats-number">15+</span>
-                    <span className="hero__stats-label">Projects</span>
-                  </div>
-                  <div className="hero__stats-divider" />
-                  <div className="hero__stats-item">
-                    <span className="hero__stats-number">13+</span>
-                    <span className="hero__stats-label">Technologies</span>
-                  </div>
+                <div className="hero__tech-row">
+                  {TECH_PILLS.map(pill => (
+                    <span key={pill} className="hero__tech-pill">{pill}</span>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

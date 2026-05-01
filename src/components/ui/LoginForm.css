@@ -1,0 +1,23 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 400px;
+}
+
+.login-form__submit {
+  align-self: flex-start;
+  min-width: 160px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.login-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.login-form__submit:disabled::after {
+  display: none;
+}

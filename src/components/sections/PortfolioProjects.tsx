@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import { PROJECTS } from '../../lib/data'
 import { useReveal } from '../../hooks/useReveal'
 import './PortfolioProjects.css'
 
 export default function PortfolioProjects() {
+  const { t } = useTranslation()
   const { ref: headerRef, visible: headerVisible } = useReveal()
   const { ref: gridRef, visible: gridVisible } = useReveal()
 
@@ -14,14 +16,11 @@ export default function PortfolioProjects() {
           className={`p-projects__header reveal ${headerVisible ? 'visible' : ''}`}
           ref={headerRef as React.RefObject<HTMLDivElement>}
         >
-          <span className="section-label">What I've Built</span>
-          <h2 className="p-section-title">Projects</h2>
+          <span className="section-label">{t('projects.label')}</span>
+          <h2 className="p-section-title">{t('projects.title')}</h2>
         </div>
 
-        <div
-          className="p-projects__grid"
-          ref={gridRef as React.RefObject<HTMLDivElement>}
-        >
+        <div className="p-projects__grid" ref={gridRef as React.RefObject<HTMLDivElement>}>
           {PROJECTS.map((project, i) => (
             <div
               key={project.id}
@@ -29,11 +28,7 @@ export default function PortfolioProjects() {
             >
               <div className="p-project-card__img-wrap">
                 {project.image ? (
-                  <img
-                    src={project.image}
-                    alt={project.imageAlt}
-                    className="p-project-card__img"
-                  />
+                  <img src={project.image} alt={project.imageAlt} className="p-project-card__img" />
                 ) : (
                   <div className="p-project-card__placeholder">
                     <div className="p-project-card__placeholder-grid" />
@@ -50,18 +45,13 @@ export default function PortfolioProjects() {
                 <h3 className="p-project-card__name">{project.name}</h3>
                 <p className="p-project-card__desc">{project.description}</p>
                 <div className="p-project-card__tags">
-                  {project.tech.map(t => (
-                    <span key={t} className="p-project-card__tag">{t}</span>
+                  {project.tech.map(tag => (
+                    <span key={tag} className="p-project-card__tag">{tag}</span>
                   ))}
                 </div>
                 {project.repoUrl && (
-                  <a
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-project-card__link"
-                  >
-                    View on GitHub →
+                  <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="p-project-card__link">
+                    {t('projects.view_github')}
                   </a>
                 )}
               </div>
