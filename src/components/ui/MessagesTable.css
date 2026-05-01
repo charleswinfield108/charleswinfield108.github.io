@@ -1,5 +1,5 @@
 .messages-table-wrapper {
-  background: rgba(13, 16, 40, 0.65);
+  background: var(--card-bg);
   backdrop-filter: blur(14px);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -22,7 +22,7 @@
 }
 
 .messages-table thead {
-  background: rgba(17, 20, 78, 0.4);
+  background: var(--bg-alt);
 }
 
 .messages-table th {
@@ -63,7 +63,7 @@
 
 .cell-name {
   font-weight: 600;
-  color: var(--white);
+  color: var(--text-h);
 }
 
 .cell-email a {
@@ -166,13 +166,13 @@
 
 /* Empty state */
 .messages-table-empty {
-  background: rgba(13, 16, 40, 0.65);
+  background: var(--card-bg);
   backdrop-filter: blur(14px);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 60px 24px;
   text-align: center;
-  color: var(--silver);
+  color: var(--text);
   font-size: 15px;
   line-height: 1.6;
 }
