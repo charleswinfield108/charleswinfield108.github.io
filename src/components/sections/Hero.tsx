@@ -39,8 +39,8 @@ export default function Hero() {
             <motion.p className="hero__bio" {...fadeUp(0.25)}>{t('hero.bio')}</motion.p>
 
             <motion.div className="hero__ctas" {...fadeUp(0.35)}>
-              <Link to="/contact" className="btn btn-primary hero__btn-contact">{t('hero.cta_contact')}</Link>
-              <Link to="/portfolio" className="btn btn-primary">{t('hero.cta_work')}</Link>
+              <Link to="/contact" className="btn btn-outline hero__btn-contact">{t('hero.cta_contact')}</Link>
+              <Link to="/portfolio" className="btn btn-outline">{t('hero.cta_work')}</Link>
             </motion.div>
           </div>
 
