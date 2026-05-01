@@ -9,23 +9,50 @@
   --mid-grey:   #707070;
   --white:      #FFFFFF;
 
-  /* Semantic tokens */
-  --bg:         var(--navy-dark);
-  --bg-alt:     var(--navy-dark);
-  --text:       var(--silver);
-  --text-h:     var(--white);
+  /* Semantic tokens — light mode */
+  --bg:         var(--white);
+  --bg-alt:     #F5F6F8;
+  --text:       var(--mid-grey);
+  --text-h:     var(--navy);
   --accent:     var(--teal);
   --accent-alt: var(--yellow);
-  --border:     rgba(193, 186, 186, 0.15);
-  --shadow:     0 10px 40px rgba(0, 0, 0, 0.4);
+  --border:     var(--silver);
+  --shadow:
+    rgba(16, 24, 43, 0.1) 0 10px 15px -3px, rgba(16, 24, 43, 0.05) 0 4px 6px -2px;
 
   /* Typography */
   --sans:    'proxima-nova', system-ui, 'Segoe UI', sans-serif;
   --heading: 'proxima-nova', system-ui, 'Segoe UI', sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
 
   /* Layout */
   --container: 1200px;
   --section-py: 100px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         var(--navy-dark);
+    --bg-alt:     var(--navy);
+    --text:       var(--silver);
+    --text-h:     var(--white);
+    --accent:     var(--teal);
+    --accent-alt: var(--yellow);
+    --border:     #2a3350;
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
 }
 
 *, *::before, *::after {
