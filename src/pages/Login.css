@@ -40,7 +40,7 @@
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 12px;
-  color: var(--white);
+  color: var(--text-h);
 }
 
 .login-page__header p {
