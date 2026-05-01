@@ -15,7 +15,7 @@
 .admin-title {
   font-size: clamp(32px, 4vw, 48px);
   font-weight: 800;
-  color: var(--white);
+  color: var(--text-h);
   margin-top: 12px;
   line-height: 1.1;
 }
