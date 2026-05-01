@@ -91,6 +91,7 @@
   height: 48px;
   width: auto;
   opacity: 0.85;
+  filter: brightness(0) invert(1);
 }
 
 .footer-cta__tagline {
