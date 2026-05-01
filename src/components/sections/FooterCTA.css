@@ -53,22 +53,27 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 28px;
-  border-radius: 50px;
-  border: 2px solid var(--teal);
-  background: transparent;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background:
+    linear-gradient(var(--navy-dark), var(--navy-dark)) padding-box,
+    linear-gradient(135deg, var(--teal) 0%, var(--yellow) 100%) border-box;
+  border: 2px solid transparent;
   color: var(--teal);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   white-space: nowrap;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .footer-cta__banner-btn:hover {
-  background: var(--teal);
+  background: linear-gradient(135deg, var(--teal) 0%, var(--yellow) 100%);
+  border-color: transparent;
   color: var(--navy-dark);
-  box-shadow: 0 0 28px rgba(34, 177, 196, 0.3);
+  box-shadow: 0 0 28px rgba(34, 177, 196, 0.25);
 }
 
 /* ── Footer bottom ── */
