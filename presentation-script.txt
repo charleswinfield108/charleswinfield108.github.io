@@ -1,0 +1,116 @@
+PORTFOLIO PROJECT — TECHNICAL CODE WALKTHROUGH
+5 Minute Presentation Script
+Charles Winfield
+===============================================================
+
+
+ENTRY POINT — App.tsx  (45 seconds)
+---------------------------------------------------------------
+Let's start at the top of the application — src/App.tsx.
+
+This is the root of the entire app. The first thing you'll notice
+is that the component is split into two functions — App and
+AppContent. This is intentional. App is responsible for two things
+only: initializing the theme system and wrapping everything in the
+router. AppContent handles everything that needs to live inside the
+router context — navigation, page transitions, and the keyboard
+shortcut.
+
+Speaking of which — look at this useEffect. When the user presses
+Ctrl+Shift+L, they're silently routed to the login page. There's no
+link to it anywhere on the site. It's a hidden admin entry point.
+
+Page transitions are handled by Framer Motion's AnimatePresence.
+Every route change triggers a fade and slide — the outgoing page
+fades up, the incoming page fades in from below.
+
+
+THEME SYSTEM — useTheme.ts  (60 seconds)
+---------------------------------------------------------------
+Next, src/hooks/useTheme.ts — this is one of my favourite pieces
+of the codebase because it's small but does a lot of work.
+
+getInitialTheme runs before the first render. It checks localStorage
+first — so if you've already set a preference, it honours that. If
+not, it reads the operating system preference using
+window.matchMedia. So on first visit, the site automatically matches
+your system theme.
+
+When the theme changes, this useEffect does two things: it writes
+the preference to localStorage so it persists across sessions, and
+it sets data-theme directly on document.documentElement — the HTML
+tag itself. That single attribute change cascades through the entire
+CSS variable system. There's no class toggling, no JavaScript color
+switching — just one attribute and CSS does the rest.
+
+
+CSS THEMING ARCHITECTURE — index.css  (45 seconds)
+---------------------------------------------------------------
+Which brings me to src/index.css. The entire visual system is built
+on CSS custom properties. All colours, shadows, and backgrounds are
+defined as variables in the :root block — dark mode by default.
+Light mode is a separate block of overrides scoped to
+[data-theme="light"].
+
+This means every component in the app gets light and dark mode for
+free, just by using var(--bg), var(--text-h), var(--card-bg) and
+so on. No component needs to know which mode it's in. The theme is
+purely a CSS concern.
+
+
+SUPABASE INTEGRATION — supabaseClient.ts & ContactForm.tsx  (75 seconds)
+---------------------------------------------------------------
+Now let's look at the two places where Supabase powers the backend
+— starting with src/lib/supabaseClient.ts. It's just three lines.
+The URL and anon key are injected at build time via Vite's
+environment variable system — they never exist in the codebase
+itself. In production they come from GitHub repository secrets.
+
+The first integration point is src/components/ui/ContactForm.tsx.
+Look at the handleSubmit function. After client-side validation —
+which checks all three fields and focuses the first error — it calls
+supabase.from('messages').insert(payload). That's a single line that
+writes directly to a PostgreSQL table. No Express server, no REST
+endpoint I wrote — Supabase handles the entire API layer.
+
+The status machine here is worth noting — idle, loading, success,
+error. The button label changes with each state, the form resets on
+success, and the error banner appears if the insert fails. The
+success state auto-clears after 5 seconds.
+
+The second integration point is the Admin page, which uses
+supabase.auth.signInWithPassword for authentication and
+supabase.from('messages').select() to fetch submissions — the same
+client, different operations.
+
+
+INTERNATIONALISATION — i18n/index.ts  (30 seconds)
+---------------------------------------------------------------
+Finally, src/i18n/index.ts. The app is fully bilingual — English
+and French. i18next is configured with the browser language
+detector, which checks localStorage first, then the browser's
+navigator language. Every string in the UI comes from a translation
+key — nothing is hardcoded in the components. Adding a third
+language would mean adding one JSON file.
+
+
+CLOSING  (15 seconds)
+---------------------------------------------------------------
+So to summarise the architecture: a React TypeScript SPA, a
+CSS-only theme system driven by a single custom hook, Supabase as
+the full backend layer, and i18next for internationalisation — all
+deployed automatically via GitHub Actions.
+
+Happy to open any of these files and go deeper on anything you'd
+like to see.
+
+
+===============================================================
+FILES TO HAVE OPEN DURING PRESENTATION:
+  1. src/App.tsx
+  2. src/hooks/useTheme.ts
+  3. src/index.css
+  4. src/lib/supabaseClient.ts
+  5. src/components/ui/ContactForm.tsx
+  6. src/i18n/index.ts
+===============================================================
